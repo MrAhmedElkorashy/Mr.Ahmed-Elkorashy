@@ -1,0 +1,43 @@
+:root {
+  --gold: #FFD700;
+  --lapis: #000080;
+  --papyrus: #F3E5AB;
+  --stone: #2B2215;
+}
+
+.temple-container {
+  background-color: var(--stone);
+  min-height: 100vh;
+  color: var(--papyrus);
+}
+
+.gold-header {
+  border-bottom: 4px solid var(--gold);
+  background: black;
+  padding: 20px;
+  text-align: center;
+}
+
+.cartouche-id {
+  border: 2px solid var(--gold);
+  border-radius: 50px; /* Oval cartouche shape */
+  display: inline-block;
+  padding: 5px 20px;
+  color: var(--gold);
+  font-weight: bold;
+}
+
+.lapis-tabs {
+  background: var(--lapis);
+  display: flex;
+  justify-content: space-around;
+}
+
+.lecture-card {
+  background: var(--papyrus);
+  color: #333;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 10px 0 var(--gold);
+}
