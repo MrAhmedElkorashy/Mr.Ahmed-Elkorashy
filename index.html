@@ -3,44 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة الإمبراطور | أحمد القرشي</title>
+    <title>إمبراطورية التاريخ | أ. أحمد القرشي - النظام الشامل</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #D4AF37; --bg: #050505; --card: #111; --text: #fff; --red: #ff4d4d; --green: #2ecc71; }
+        :root { --gold: #D4AF37; --bg: #050505; --card: #111; --text: #fff; --red: #ff4d4d; --green: #2ecc71; --paymob: #005CE6; }
         body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Cairo', sans-serif; overflow-x: hidden; }
 
-        /* Notifications */
+        /* التنبيهات */
         #notification-container { position: fixed; top: 20px; left: 20px; z-index: 10000; }
-        .toast { background: var(--card); border-right: 5px solid var(--gold); color: white; padding: 15px 25px; margin-bottom: 10px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); animation: slideIn 0.5s ease; min-width: 280px; border: 1px solid rgba(212, 175, 55, 0.3); }
+        .toast { background: var(--card); border-right: 5px solid var(--gold); color: white; padding: 15px 25px; margin-bottom: 10px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); animation: slideIn 0.5s ease; min-width: 280px; border: 1px solid rgba(212, 175, 55, 0.3); font-weight: bold; }
         @keyframes slideIn { from { transform: translateX(-100%); } to { transform: translateX(0); } }
 
-        /* Landing Page */
+        /* واجهة الهبوط */
         .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-attachment: fixed; }
         .navbar { position: fixed; top:0; width:100%; padding:15px; display:flex; justify-content:space-around; background:rgba(0,0,0,0.8); backdrop-filter:blur(15px); z-index:1000; border-bottom:1px solid var(--gold); }
-        .btn { padding:10px 25px; border-radius:12px; cursor:pointer; font-weight:bold; border:none; transition:0.3s; font-family: 'Cairo'; display: inline-block; text-align: center; }
+        .btn { padding:12px 25px; border-radius:12px; cursor:pointer; font-weight:bold; border:none; transition:0.3s; font-family: 'Cairo'; }
         .btn-gold { background: var(--gold); color:#000; }
         .btn-outline { background:transparent; border:1px solid var(--gold); color:var(--gold); }
+        .btn-paymob { background: var(--paymob); color: #fff; border: none; padding: 8px 15px; border-radius: 8px; font-size: 13px; }
 
-        /* Slider */
+        /* التقييمات والنجوم */
         .reviews-container { width: 100%; max-width: 600px; margin-top: 30px; overflow: hidden; background: rgba(0,0,0,0.6); border-radius: 20px; border: 1px solid rgba(212, 175, 55, 0.2); backdrop-filter: blur(10px); }
         .reviews-track { display: flex; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
         .review-card { min-width: 100%; padding: 25px; box-sizing: border-box; text-align: center; }
+        .stars { color: var(--gold); font-size: 1.5rem; margin-bottom: 10px; letter-spacing: 2px; }
 
-        /* Dashboard */
+        /* لوحة التحكم */
         #dashboard { display:none; min-height:100vh; flex-direction:row; }
-        .sidebar { width:280px; background:#000; border-left:1px solid #222; padding:25px; display:flex; flex-direction:column; }
-        .main-content { flex:1; padding:40px; background:#080808; overflow-y: auto; height: 100vh; }
-        .card { background:var(--card); padding:25px; border-radius:18px; border:1px solid #222; margin-bottom:25px; }
+        .sidebar { width:280px; background:#000; border-left:1px solid #222; padding:25px; display:flex; flex-direction:column; position: sticky; top:0; height: 100vh; }
+        .main-content { flex:1; padding:40px; background:#080808; overflow-y: auto; }
+        .card { background:var(--card); padding:25px; border-radius:18px; border:1px solid #222; margin-bottom:25px; display: flex; flex-direction: column; gap: 10px; }
 
-        /* Video */
+        /* الفيديو والحماية */
         .video-container { position:relative; width:100%; border-radius:15px; overflow:hidden; border:2px solid var(--gold); background: #000; }
-        #watermark { position:absolute; color:rgba(255,255,255,0.2); font-weight:bold; pointer-events:none; z-index:99; transition:3s linear; white-space:nowrap; }
+        #watermark { position:absolute; color:rgba(255,255,255,0.2); font-weight:bold; pointer-events:none; z-index:99; transition:3s linear; white-space:nowrap; text-shadow: 2px 2px 4px #000; font-size: 18px; }
         
-        input, select, textarea { width:100%; padding:12px; margin:10px 0; background:#1a1a1a; border:1px solid #333; color:#fff; border-radius:8px; font-family: 'Cairo'; box-sizing: border-box; }
+        input, select, textarea { width:100%; padding:14px; background:#1a1a1a; border:1px solid #333; color:#fff; border-radius:8px; font-family: 'Cairo'; box-sizing: border-box; outline: none; }
+        input:focus, select:focus { border-color: var(--gold); }
         .hidden { display:none !important; }
-        .modal { position:fixed; inset:0; background:rgba(0,0,0,0.95); display:none; justify-content:center; align-items:center; z-index:9999; }
-        .form-box { background:#111; padding:30px; border-radius:20px; border:2px solid var(--gold); width:350px; }
-        .password-hint { font-size: 11px; color: #888; margin-top: -5px; margin-bottom: 10px; }
+        
+        /* النوافذ المنبثقة (Modals) */
+        .modal { position:fixed; inset:0; background:rgba(0,0,0,0.95); display:none; justify-content:center; align-items:center; z-index:9999; backdrop-filter: blur(5px); }
+        .form-box { background:#111; padding:30px; border-radius:20px; border:2px solid var(--gold); width:380px; box-shadow: 0 10px 40px rgba(212,175,55,0.2); }
+        .form-box.paymob-box { background: #fff; border-color: var(--paymob); color: #000; }
+        .form-box.paymob-box input { background: #f0f0f0; color: #000; border: 1px solid #ccc; }
+        .tag { font-size: 11px; background: var(--gold); color: #000; padding: 3px 8px; border-radius: 4px; font-weight: bold; margin-right: 10px; }
+        .pass-hint { font-size: 11px; color: #aaa; margin-top: -5px; line-height: 1.5; }
+
+        /* الخوارزمية الذكية */
+        .algo-box { background: rgba(46, 204, 113, 0.1); border: 1px solid var(--green); padding: 15px; border-radius: 10px; text-align: center; margin-top: 15px; }
+        .algo-box.warn { background: rgba(255, 77, 77, 0.1); border-color: var(--red); color: var(--red); }
     </style>
 </head>
 <body onload="initSystem()">
@@ -50,18 +62,24 @@
     <section id="home-view">
         <nav class="navbar">
             <div style="display:flex; gap:15px">
-                <button class="btn btn-gold" onclick="openModal('login-modal')">دخول</button>
+                <button class="btn btn-gold" onclick="openModal('login-modal')">دخول المنصة</button>
                 <button class="btn btn-outline" onclick="openModal('signup-modal')">حساب جديد</button>
             </div>
-            <div style="color:var(--gold); font-weight:900; font-size:24px">إمبراطور التاريخ</div>
+            <div style="color:var(--gold); font-weight:900; font-size:26px">إمبراطور التاريخ</div>
         </nav>
         <div class="hero">
-            <div style="border:1px solid var(--gold); padding:8px 30px; border-radius:50px; margin-bottom:20px; color: var(--gold);">التاريخ في أمان مع أحمد القرشي</div>
-            <h1 style="font-size:3rem;">الأستاذ أحمد القرشي</h1>
+            <div style="border:1px solid var(--gold); padding:8px 30px; border-radius:50px; margin-bottom:20px; color: var(--gold); background: rgba(212, 175, 55, 0.1);">المنصة الذكية الأولى في مصر بضمان القرشي</div>
+            <h1 style="font-size:3.5rem; margin: 10px 0;">الأستاذ أحمد القرشي</h1>
             <div class="reviews-container">
                 <div class="reviews-track" id="reviewTrack">
-                    <div class="review-card"><p>"أقوى شرح تاريخ في مصر."</p></div>
-                    <div class="review-card"><p>"المنصة حمايتها جبارة."</p></div>
+                    <div class="review-card">
+                        <div class="stars">★★★★★</div>
+                        <p>"أقوى شرح، الخوارزمية بتعرف نقط ضعفي وتخليني أراجعها."</p>
+                    </div>
+                    <div class="review-card">
+                        <div class="stars">★★★★★</div>
+                        <p>"نظام الدفع والحماية ولا أروع، والمستر بيرد علينا بنفسه."</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -69,92 +87,142 @@
 
     <div id="dashboard">
         <aside class="sidebar">
-            <h2 id="u-name" style="color:var(--gold);"></h2>
+            <h2 id="u-name" style="color:var(--gold); margin-bottom:5px"></h2>
+            <div id="u-role" style="font-size:12px; color:#888; margin-bottom:25px"></div>
             <div id="nav-links"></div>
-            <button class="btn btn-gold" style="background:var(--red); color:white; margin-top:auto" onclick="location.reload()">خروج</button>
+            <button class="btn btn-gold" style="background:var(--red); color:white; margin-top:auto" onclick="location.reload()">تسجيل خروج</button>
         </aside>
 
         <main class="main-content">
             <div id="sec-teacher" class="sec hidden">
-                <h1>🏛️ لوحة التحكم</h1>
+                <h1 style="color:var(--gold)">🏛️ إدارة المحتوى والخوارزمية</h1>
                 <div class="card">
-                    <h3>نشر فيديو جديد من جهازك</h3>
                     <input type="text" id="lec-title" placeholder="عنوان الدرس">
-                    <input type="file" id="lec-file" accept="video/*"> <button class="btn btn-gold" onclick="addLecture()">رفع الفيديو الآن</button>
-                    <progress id="upload-progress" value="0" max="100" style="width:100%; margin-top:10px; display:none;"></progress>
+                    <div style="display:flex; gap:10px">
+                        <select id="lec-stage"><option value="1">الصف الأول الثانوي</option><option value="2">الصف الثاني الثانوي</option><option value="3">الصف الثالث الثانوي</option></select>
+                        <select id="lec-term"><option value="1">الترم الأول</option><option value="2">الترم الثاني</option></select>
+                    </div>
+                    <select id="lec-month">
+                        <option value="8">شهر 8</option><option value="9">شهر 9</option><option value="10">شهر 10</option><option value="11">شهر 11</option><option value="12">شهر 12</option>
+                        <option value="1">شهر 1</option><option value="2">شهر 2</option><option value="3">شهر 3</option><option value="4">شهر 4</option><option value="5">شهر 5</option>
+                    </select>
+                    <label style="color:var(--gold); font-size: 14px;">رفع فيديو من جهازك:</label>
+                    <input type="file" id="lec-file" accept="video/*">
+                    <button class="btn btn-gold" onclick="addLecture()">نشر المحاضرة وتفعيل الخوارزمية</button>
+                    <progress id="upload-progress" value="0" max="100" style="width:100%; height: 10px; display:none;"></progress>
                 </div>
                 <div id="lec-list-teacher"></div>
             </div>
 
             <div id="sec-staff" class="sec hidden">
-                <h1>📋 تفعيل الطلاب</h1>
+                <h1 style="color:var(--gold)">📋 تفعيل اشتراكات الطلاب</h1>
                 <div class="card">
-                    <input type="text" id="staff-st-id" placeholder="كود الطالب ST-XXXX">
+                    <input type="text" id="staff-st-id" placeholder="كود الطالب (ST-XXXX)">
                     <select id="staff-lec-select"></select>
                     <select id="staff-type">
-                        <option value="Center">سنتر (3 مشاهدات)</option>
+                        <option value="Center">سنتر (3 مشاهدات فقط)</option>
                         <option value="Online">أونلاين (غير محدود)</option>
                     </select>
-                    <button class="btn btn-gold" style="width:100%" onclick="activateAndNotify()">تفعيل</button>
+                    <button class="btn btn-gold" onclick="activateStudent()">تفعيل الكود للمحاضرة</button>
                 </div>
             </div>
 
-            <div id="sec-student-subs" class="sec hidden"><h1>💳 اشتراكاتي</h1><div id="student-subs-list"></div></div>
+            <div id="sec-student-subs" class="sec hidden">
+                <h1 style="color:var(--gold)">💳 تبويب الاشتراكات والدفع</h1>
+                <div id="student-subs-list"></div>
+            </div>
+
             <div id="sec-student-lecs" class="sec hidden">
-                <h1>🎥 فيديوهاتي</h1>
+                <h1 style="color:var(--gold)">🎥 محاضراتي والتقييم الذكي</h1>
                 <div id="student-lectures"></div>
                 <div id="video-area" class="hidden">
-                    <div class="video-container"><div id="watermark"></div><video id="main-v" width="100%" controls controlsList="nodownload"></video></div>
-                    <div class="card" style="margin-top:20px"><h3>اسأل المستر</h3><textarea id="st-q"></textarea><button class="btn btn-gold" onclick="sendQ()">إرسال</button></div>
+                    <div class="video-container">
+                        <div id="watermark"></div>
+                        <video id="main-v" width="100%" controls controlsList="nodownload" oncontextmenu="return false;"></video>
+                    </div>
+                    
+                    <div class="card" style="margin-top:20px; text-align:center" id="algo-section">
+                        <h3 style="color:var(--gold)">🧠 التقييم الذكي (الخوارزمية)</h3>
+                        <p>بعد مشاهدة الفيديو، قيّم فهمك للمحاضرة لتقوم الخوارزمية بتوجيهك.</p>
+                        <select id="algo-score" style="width:50%; margin:0 auto; display:block;">
+                            <option value="100">فهمت المحاضرة بنسبة 100%</option>
+                            <option value="70">فهمت بنسبة 70%</option>
+                            <option value="40">فهمت أقل من 50% (أحتاج مراجعة)</option>
+                        </select>
+                        <button class="btn btn-outline" style="margin-top:15px" onclick="runAlgorithm()">تحليل المستوى</button>
+                        <div id="algo-result" class="hidden"></div>
+                    </div>
+
+                    <div class="card" style="margin-top:20px">
+                        <h3>اسأل المستر</h3>
+                        <textarea id="st-q" placeholder="اكتب سؤالك هنا بوضوح..."></textarea>
+                        <button class="btn btn-gold" onclick="sendQ()">إرسال السؤال</button>
+                    </div>
                 </div>
             </div>
         </main>
     </div>
 
     <div id="signup-modal" class="modal"><div class="form-box">
-        <h2 style="color:var(--gold); text-align:center">تسجيل جديد</h2>
-        <input type="text" id="s-name" placeholder="الاسم">
-        <select id="s-stage"><option value="1">أول ثانوي</option><option value="2">ثاني ثانوي</option><option value="3">ثالث ثانوي</option></select>
+        <h2 style="color:var(--gold); text-align:center">تسجيل إمبراطوري جديد</h2>
+        <input type="text" id="s-name" placeholder="الاسم الرباعي">
+        <select id="s-stage"><option value="1">أولى ثانوي</option><option value="2">ثانية ثانوي</option><option value="3">ثالثة ثانوي</option></select>
         <input type="password" id="s-pass" placeholder="كلمة المرور">
-        <div class="password-hint">يجب أن تكون 8 رموز على الأقل، تحتوي على رقم ورمز خاص (@#$!).</div>
-        <button class="btn btn-gold" style="width:100%" onclick="signup()">إنشاء حساب</button>
-        <p onclick="closeModals()" style="text-align:center; cursor:pointer">إغلاق</p>
+        <div class="pass-hint">يجب أن تكون 8 رموز وتتضمن رقماً ورمزاً خاصاً مثل (@#$).</div>
+        <button class="btn btn-gold" style="width:100%; margin-top:10px" onclick="signup()">إنشاء حسابي</button>
+        <p onclick="closeModals()" style="text-align:center; cursor:pointer; color:#888; margin-top:15px">إلغاء</p>
     </div></div>
 
     <div id="login-modal" class="modal"><div class="form-box">
-        <h2 style="color:var(--gold); text-align:center">دخول</h2>
-        <input type="text" id="l-id" placeholder="الكود">
+        <h2 style="color:var(--gold); text-align:center">تسجيل الدخول</h2>
+        <input type="text" id="l-id" placeholder="كود المستخدم (ID)">
         <input type="password" id="l-pass" placeholder="كلمة المرور">
-        <button class="btn btn-gold" style="width:100%" onclick="login()">دخول</button>
-        <p onclick="closeModals()" style="text-align:center; cursor:pointer">إغلاق</p>
+        <button class="btn btn-gold" style="width:100%; margin-top:10px" onclick="login()">دخول</button>
+        <p onclick="closeModals()" style="text-align:center; cursor:pointer; color:#888; margin-top:15px">إلغاء</p>
+    </div></div>
+
+    <div id="paymob-modal" class="modal"><div class="form-box paymob-box">
+        <h2 style="color:var(--paymob); margin-top:0">Paymob Secure Pay</h2>
+        <p style="font-weight:bold; font-size:14px">دفع اشتراك: <span id="paymob-lec-name" style="color:var(--gold)"></span></p>
+        <input type="text" placeholder="رقم البطاقة (للتجربة اكتب أي رقم)">
+        <div style="display:flex; gap:10px">
+            <input type="text" placeholder="MM/YY">
+            <input type="text" placeholder="CVC">
+        </div>
+        <button class="btn" style="background:var(--paymob); color:white; width:100%; margin-top:15px" onclick="processPaymob()">تأكيد الدفع 💳</button>
+        <p onclick="closeModals()" style="text-align:center; cursor:pointer; color:#888; margin-top:15px; font-size:13px">إلغاء العملية</p>
     </div></div>
 
     <script>
-        let db; let activeUser = null; let curLecId = null;
+        let db; let activeUser = null; let curLecId = null; let pendingPaymobId = null;
 
+        // تهيئة النظام وإنشاء الحسابات الافتراضية
         function initSystem() {
-            db = JSON.parse(localStorage.getItem('empire_v2026_4')) || { 
+            db = JSON.parse(localStorage.getItem('empire_final_master')) || { 
                 users: [
-                    {id: "BOSS-OWNER", name: "المالك", password: "Boss@2026", role: "boss"}, 
-                    {id: "TEACHER-AHMED", name: "أحمد القرشي", password: "Emperor#1", role: "teacher"},
-                    {id: "STAFF-01", name: "مساعد 1", password: "Staff!2026", role: "staff"}
+                    {id: "BOSS-OWNER", name: "المالك الرئيسي", password: "Boss@Admin2026", role: "boss"}, 
+                    {id: "TEACHER-AHMED", name: "أحمد القرشي", password: "Emperor#History1", role: "teacher"},
+                    {id: "STAFF-01", name: "مساعد 1", password: "Staff!Power2026", role: "staff"},
+                    {id: "STAFF-02", name: "مساعد 2", password: "Staff@Power2026", role: "staff"},
+                    {id: "STAFF-03", name: "مساعد 3", password: "Staff#Power2026", role: "staff"}
                 ],
                 lectures: [], questions: []
             };
             startReviewSlider();
         }
 
-        function validatePassword(pass) {
-            const regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
-            return regex.test(pass);
-        }
+        // الحماية وكلمة المرور
+        function isStrongPass(p) { return /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/.test(p); }
 
         function signup() {
             const pass = document.getElementById('s-pass').value;
-            if(!validatePassword(pass)) return notify("كلمة المرور ضعيفة جداً! اتبع التعليمات.");
+            if(!isStrongPass(pass)) return notify("⚠️ كلمة المرور ضعيفة! راجع الشروط.");
+            const name = document.getElementById('s-name').value;
+            if(!name) return notify("⚠️ اكتب اسمك!");
+            
             const id = "ST-" + Math.floor(1000 + Math.random() * 9000);
-            db.users.push({id, name: document.getElementById('s-name').value, stage: document.getElementById('s-stage').value, password: pass, role: "student", access: {}});
-            save(); notify("تم التسجيل! كودك: " + id); closeModals();
+            db.users.push({id, name, stage: document.getElementById('s-stage').value, password: pass, role: "student", access: {}});
+            save(); alert(`تم إنشاء الحساب بنجاح!\nكود الدخول الخاص بك: ${id}`); closeModals();
         }
 
         function login() {
@@ -164,94 +232,171 @@
                 document.getElementById('home-view').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'flex';
                 document.getElementById('u-name').innerText = activeUser.name;
-                renderNav(); closeModals(); notify("أهلاً يا إمبراطور");
-            } else notify("بيانات خاطئة!");
+                document.getElementById('u-role').innerText = `كود: ${activeUser.id} | رتبة: ${activeUser.role}`;
+                renderNav(); closeModals(); notify("أهلاً بك في المنصة");
+            } else notify("❌ كود المستخدم أو كلمة المرور خطأ");
         }
 
+        // رفع الفيديو من الجهاز
         function addLecture() {
             const title = document.getElementById('lec-title').value;
-            const fileInput = document.getElementById('lec-file');
-            const file = fileInput.files[0];
-            const progress = document.getElementById('upload-progress');
+            const file = document.getElementById('lec-file').files[0];
+            const prog = document.getElementById('upload-progress');
+            if(!title || !file) return notify("⚠️ تأكد من كتابة العنوان واختيار الفيديو");
 
-            if(!title || !file) return notify("من فضلك اختر ملف الفيديو واكتب العنوان");
-
-            progress.style.display = 'block';
+            prog.style.display = 'block';
             const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                db.lectures.push({id: Date.now(), title, url: e.target.result});
-                save(); 
-                progress.style.display = 'none';
-                notify("تم رفع الفيديو بنجاح من جهازك!");
-                renderTeacher();
+            reader.onload = (e) => {
+                db.lectures.push({
+                    id: Date.now(), title, url: e.target.result,
+                    stage: document.getElementById('lec-stage').value,
+                    term: document.getElementById('lec-term').value,
+                    month: document.getElementById('lec-month').value
+                });
+                save(); prog.style.display = 'none'; document.getElementById('lec-title').value=''; 
+                notify("✅ تم رفع وتصنيف الفيديو بنجاح"); renderTeacher();
             };
-
-            reader.onprogress = function(data) {
-                if (data.lengthComputable) {
-                    progress.value = Math.round((data.loaded / data.total) * 100);
-                }
-            };
+            reader.onprogress = (d) => { if(d.lengthComputable) prog.value = Math.round((d.loaded/d.total)*100); };
             reader.readAsDataURL(file);
         }
 
+        // التوجيه بناء على الصلاحيات
         function renderNav() {
             const nav = document.getElementById('nav-links'); nav.innerHTML = '';
             if(activeUser.role === 'student') {
-                nav.innerHTML += `<button class="btn btn-outline" style="width:100%; margin-bottom:10px" onclick="showSec('sec-student-subs'); renderSubs();">💳 اشتراكاتي</button>`;
-                nav.innerHTML += `<button class="btn btn-outline" style="width:100%; margin-bottom:10px" onclick="showSec('sec-student-lecs'); renderStudentLecs();">🎥 المحاضرات</button>`;
+                nav.innerHTML += `<button class="btn btn-outline" style="width:100%; margin-bottom:10px" onclick="showSec('sec-student-subs'); renderSubs();">💳 الاشتراكات (Paymob)</button>`;
+                nav.innerHTML += `<button class="btn btn-outline" style="width:100%; margin-bottom:10px" onclick="showSec('sec-student-lecs'); renderStudentLecs();">🎥 المحاضرات والخوارزمية</button>`;
             } else {
-                if(activeUser.role !== 'staff') nav.innerHTML += `<button class="btn btn-outline" style="width:100%; margin-bottom:10px" onclick="showSec('sec-teacher'); renderTeacher();">🏛️ إدارة الدروس</button>`;
-                nav.innerHTML += `<button class="btn btn-outline" style="width:100%; margin-bottom:10px" onclick="showSec('sec-staff'); renderStaff();">📋 تفعيل الطلاب</button>`;
+                if(activeUser.role !== 'staff') nav.innerHTML += `<button class="btn btn-outline" style="width:100%; margin-bottom:10px" onclick="showSec('sec-teacher'); renderTeacher();">🏛️ رفع المحاضرات</button>`;
+                nav.innerHTML += `<button class="btn btn-outline" style="width:100%; margin-bottom:10px" onclick="showSec('sec-staff'); renderStaff();">📋 تفعيل الأكواد (للمساعدين)</button>`;
             }
         }
 
-        function activateAndNotify() {
-            const st = db.users.find(u => u.id === document.getElementById('staff-st-id').value);
-            const lecId = document.getElementById('staff-lec-select').value;
-            const type = document.getElementById('staff-type').value;
-            if(!st) return notify("كود الطالب خطأ");
-            if(!st.access) st.access = {};
-            st.access[lecId] = (type === "Center") ? { views: 3, unlimited: false } : { views: Infinity, unlimited: true };
-            save(); notify("تم التفعيل بنجاح!");
+        // قسم الطالب: تبويب الاشتراكات والدفع
+        function renderSubs() {
+            const list = document.getElementById('student-subs-list');
+            const myLecs = db.lectures.filter(l => l.stage == activeUser.stage);
+            
+            list.innerHTML = myLecs.map(l => {
+                const acc = activeUser.access[l.id];
+                let statusHtml = "";
+                
+                if (acc && acc.unlimited) {
+                    statusHtml = `<span style="color:var(--green); font-weight:bold">مفعل أونلاين (مفتوح)</span>`;
+                } else if (acc && acc.views > 0) {
+                    statusHtml = `<span style="color:var(--gold); font-weight:bold">مفعل سنتر (متبقي ${acc.views} مشاهدات)</span>`;
+                } else {
+                    statusHtml = `<button class="btn btn-paymob" onclick="openPaymob('${l.id}')">اشتراك أونلاين (Paymob)</button>`;
+                }
+
+                return `
+                    <div class="card" style="flex-direction:row; justify-content:space-between; align-items:center">
+                        <div>
+                            <h3 style="margin:0 0 5px 0">${l.title}</h3>
+                            <span class="tag">ترم ${l.term}</span><span class="tag">شهر ${l.month}</span>
+                        </div>
+                        <div>${statusHtml}</div>
+                    </div>`;
+            }).join('') || "<p style='color:#777'>لا توجد محاضرات متاحة لمرحلتك بعد.</p>";
         }
 
+        // قسم الطالب: المشاهدة
         function renderStudentLecs() {
-            const div = document.getElementById('student-lectures');
-            div.innerHTML = db.lectures.map(l => {
+            const list = document.getElementById('student-lectures');
+            const myLecs = db.lectures.filter(l => l.stage == activeUser.stage);
+            
+            list.innerHTML = myLecs.map(l => {
                 const acc = activeUser.access[l.id];
                 if(!acc || (acc.views <= 0 && !acc.unlimited)) return "";
-                return `<div class="card"><h3>${l.title}</h3><button class="btn btn-gold" onclick="playV('${l.id}')">شاهد</button></div>`;
-            }).join('') || "لا يوجد محاضرات مفعلة";
+                return `<div class="card">
+                            <h3 style="margin-top:0">${l.title} <span class="tag">شهر ${l.month}</span></h3>
+                            <button class="btn btn-gold" onclick="playVideo('${l.id}')">بدء المشاهدة 🎥</button>
+                        </div>`;
+            }).join('') || "<p style='color:#777'>ليس لديك محاضرات مفعلة. اذهب لتبويب الاشتراكات.</p>";
         }
 
-        function playV(id) {
+        // بوابة الدفع (Paymob)
+        function openPaymob(lecId) {
+            pendingPaymobId = lecId;
+            const lec = db.lectures.find(l => l.id == lecId);
+            document.getElementById('paymob-lec-name').innerText = lec.title;
+            openModal('paymob-modal');
+        }
+
+        function processPaymob() {
+            if(!activeUser.access) activeUser.access = {};
+            activeUser.access[pendingPaymobId] = { views: Infinity, unlimited: true };
+            save(); 
+            notify("✅ تمت عملية الدفع بنجاح وتم تفعيل المحاضرة أونلاين!");
+            closeModals(); renderSubs(); renderStudentLecs();
+        }
+
+        // قسم المساعدين
+        function activateStudent() {
+            const stId = document.getElementById('staff-st-id').value;
+            const lecId = document.getElementById('staff-lec-select').value;
+            const type = document.getElementById('staff-type').value;
+            const st = db.users.find(u => u.id === stId);
+            
+            if(!st) return notify("❌ كود الطالب غير موجود بقاعدة البيانات");
+            if(!st.access) st.access = {};
+            
+            st.access[lecId] = (type === "Center") ? { views: 3, unlimited: false } : { views: Infinity, unlimited: true };
+            save(); notify(`✅ تم تفعيل الطالب بنجاح بنظام: ${type}`);
+            document.getElementById('staff-st-id').value = '';
+        }
+
+        // تشغيل الفيديو والحماية المائية
+        function playVideo(id) {
             const lec = db.lectures.find(l => l.id == id);
             if(!activeUser.access[id].unlimited) activeUser.access[id].views--;
             save(); curLecId = id;
             document.getElementById('video-area').classList.remove('hidden');
-            document.getElementById('main-v').src = lec.url;
-            startWatermark(); renderStudentLecs();
+            document.getElementById('algo-result').classList.add('hidden'); // إخفاء نتيجة الخوارزمية السابقة
+            const v = document.getElementById('main-v');
+            v.src = lec.url; v.play();
+            startWatermark(); renderStudentLecs(); renderSubs();
         }
 
-        function renderSubs() {
-            document.getElementById('student-subs-list').innerHTML = db.lectures.map(l => {
-                const acc = activeUser.access[l.id];
-                const s = acc ? (acc.unlimited ? "Online (Unlimited)" : `Center (${acc.views} Views)`) : "غير مفعل";
-                return `<div class="card">${l.title} <span style="float:left; color:var(--gold)">${s}</span></div>`;
-            }).join('');
+        function startWatermark() {
+            const wm = document.getElementById('watermark');
+            setInterval(() => {
+                wm.innerText = `${activeUser.id} - ${activeUser.name}`;
+                wm.style.top = Math.random() * 85 + "%";
+                wm.style.left = Math.random() * 70 + "%";
+            }, 3000);
         }
 
-        function renderTeacher() { document.getElementById('lec-list-teacher').innerHTML = db.lectures.map(l => `<div class="card">${l.title}</div>`).join(''); }
-        function renderStaff() { document.getElementById('staff-lec-select').innerHTML = db.lectures.map(l => `<option value="${l.id}">${l.title}</option>`).join(''); }
-        function showSec(id) { document.querySelectorAll('.sec').forEach(s => s.classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); }
-        function save() { localStorage.setItem('empire_v2026_4', JSON.stringify(db)); }
+        // الخوارزمية الذكية (Learning Algorithm)
+        function runAlgorithm() {
+            const score = parseInt(document.getElementById('algo-score').value);
+            const resDiv = document.getElementById('algo-result');
+            resDiv.classList.remove('hidden', 'warn');
+            
+            if(score === 100 || score === 70) {
+                resDiv.className = 'algo-box';
+                resDiv.innerHTML = `<strong>تحليل الخوارزمية:</strong> ممتاز يا بطل! مستوى فهمك عالي جداً وأنت مستعد للمحاضرة القادمة. 🌟🌟🌟🌟🌟`;
+            } else {
+                resDiv.className = 'algo-box warn';
+                resDiv.innerHTML = `<strong>تحليل الخوارزمية (إنذار مستوى):</strong> لاحظنا أن فهمك أقل من 50%. الخوارزمية تنصحك بإعادة المشاهدة. <br> <small>🎁 هدية من المستر: تم إضافة مشاهدة مجانية لكانط لهذا الدرس.</small>`;
+                // منح مشاهدة إضافية للسنتر إذا كان طالباً سنتر
+                if(!activeUser.access[curLecId].unlimited) {
+                    activeUser.access[curLecId].views++;
+                    save(); renderStudentLecs(); renderSubs();
+                }
+            }
+        }
+
+        // دوال مساعدة عامة
+        function save() { localStorage.setItem('empire_final_master', JSON.stringify(db)); }
         function notify(m) { const c = document.getElementById('notification-container'); const t = document.createElement('div'); t.className='toast'; t.innerText=m; c.appendChild(t); setTimeout(()=>t.remove(),4000); }
+        function showSec(id) { document.querySelectorAll('.sec').forEach(s => s.classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); }
         function openModal(id) { document.getElementById(id).style.display='flex'; }
         function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display='none'); }
+        function renderTeacher() { document.getElementById('lec-list-teacher').innerHTML = db.lectures.map(l => `<div class="card" style="flex-direction:row; justify-content:space-between"><span>${l.title}</span><span class="tag">ص ${l.stage} - ترم ${l.term} - ش ${l.month}</span></div>`).join(''); }
+        function renderStaff() { document.getElementById('staff-lec-select').innerHTML = db.lectures.map(l => `<option value="${l.id}">${l.title} (ص ${l.stage})</option>`).join(''); }
         function startReviewSlider() { let i = 0; setInterval(() => { i = (i + 1) % 2; if(document.getElementById('reviewTrack')) document.getElementById('reviewTrack').style.transform = `translateX(${i * 100}%)`; }, 4000); }
-        function startWatermark() { setInterval(() => { const wm = document.getElementById('watermark'); wm.innerText = `${activeUser.id} | ${activeUser.name}`; wm.style.top = Math.random()*80+"%"; wm.style.left = Math.random()*70+"%"; }, 3000); }
-        function sendQ() { notify("تم الإرسال للمستر"); document.getElementById('st-q').value=''; }
+        function sendQ() { notify("✅ تم إرسال سؤالك للمستر بنجاح"); document.getElementById('st-q').value=''; }
     </script>
 </body>
 </html>
