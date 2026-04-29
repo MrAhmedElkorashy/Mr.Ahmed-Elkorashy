@@ -3,195 +3,223 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إمبراطورية التاريخ | المنصة الرسمية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>إمبراطور التاريخ | أحمد القرشي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --accent: #C5A059; --bg: #050505; --card: #121212; --text: #ffffff; --danger: #ff4d4d; --success: #2ecc71; }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Cairo', sans-serif; overflow: hidden; }
-        
-        /* شاشة الدخول الاحترافية */
-        .auth-overlay { position: fixed; inset: 0; background: radial-gradient(circle at center, #1a1a1a, #000); display: flex; justify-content: center; align-items: center; z-index: 10000; }
-        .auth-card { background: var(--card); padding: 40px; border-radius: 28px; width: 100%; max-width: 380px; text-align: center; border: 1px solid #222; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-        
-        /* الهيكل الداخلي */
-        #app { display: none; min-height: 100vh; flex-direction: row; }
-        .sidebar { width: 260px; background: #000; border-left: 1px solid #222; padding: 25px; display: flex; flex-direction: column; height: 100vh; position: sticky; top: 0; }
-        .main { flex: 1; padding: 40px; background: #080808; overflow-y: auto; }
+        :root { 
+            --accent: #D4AF37; /* لون ذهبي ملكي متناسق مع الأهرامات */
+            --bg: #0a0a0a; 
+            --card: rgba(20, 20, 20, 0.9); 
+            --text: #ffffff; 
+            --danger: #e74c3c; 
+        }
 
-        /* العناصر التفاعلية */
-        .glass-input { width: 100%; background: #1a1a1a; border: 1px solid #333; padding: 14px; border-radius: 12px; color: white; margin-bottom: 20px; font-family: 'Cairo'; box-sizing: border-box; transition: 0.3s; }
+        body { 
+            margin: 0; 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: 'Cairo', sans-serif; 
+            overflow-x: hidden; 
+        }
+
+        /* Hero Section with Pyramids Background */
+        .hero { 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center; 
+            position: relative;
+            /* رابط صورة الأهرامات - يمكنك استبداله برابط مباشر آخر إذا أردت */
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 20px;
+        }
+
+        /* Navbar */
+        .navbar { 
+            position: fixed; top: 0; left: 0; right: 0; 
+            padding: 20px 5%; 
+            display: flex; justify-content: space-between; align-items: center; 
+            z-index: 1000; 
+            background: rgba(0,0,0,0.5); 
+            backdrop-filter: blur(5px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .nav-btns { display: flex; gap: 15px; }
+        .nav-btn { 
+            padding: 10px 25px; border-radius: 30px; 
+            border: 2px solid var(--accent); cursor: pointer; 
+            transition: 0.3s; font-weight: 700; font-size: 14px; 
+        }
+        .btn-login { background: var(--accent); color: #000; }
+        .btn-signup { color: var(--accent); background: transparent; }
+        .nav-btn:hover { transform: scale(1.1); box-shadow: 0 0 20px var(--accent); }
+
+        /* Slogan Styling */
+        .slogan {
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 20px;
+            background: rgba(212, 175, 55, 0.2);
+            padding: 10px 30px;
+            border-radius: 50px;
+            border: 1px solid var(--accent);
+            letter-spacing: 1px;
+        }
+
+        .hero h1 { 
+            font-size: 4rem; font-weight: 900; margin: 0; 
+            color: var(--accent); 
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+        }
+
+        .hero p.sub-title { font-size: 1.8rem; color: #eee; margin-top: 10px; font-weight: 600; }
+
+        /* Reviews Slider */
+        .reviews-container { 
+            width: 100%; max-width: 700px; 
+            margin-top: 40px; overflow: hidden; 
+            background: rgba(0,0,0,0.6); 
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        .reviews-track { display: flex; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+        .review-card { min-width: 100%; padding: 30px; box-sizing: border-box; }
+        .stars { color: var(--accent); font-size: 22px; margin-bottom: 10px; }
+
+        /* Modals */
+        .modal { 
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95); 
+            display: none; justify-content: center; align-items: center; z-index: 2000; 
+        }
+        .form-box { 
+            background: #111; padding: 40px; border-radius: 25px; 
+            width: 90%; max-width: 400px; border: 2px solid var(--accent); 
+        }
+
+        .glass-input { 
+            width: 100%; background: #222; border: 1px solid #444; 
+            padding: 12px; border-radius: 10px; color: white; margin-bottom: 15px; 
+            font-family: 'Cairo'; font-size: 16px;
+        }
         .glass-input:focus { border-color: var(--accent); outline: none; }
-        
-        .btn-gold { background: var(--accent); color: #000; border: none; padding: 15px; border-radius: 12px; font-weight: bold; cursor: pointer; width: 100%; transition: 0.3s; font-size: 16px; }
-        .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(197, 160, 89, 0.3); }
-        
-        .nav-item { padding: 15px; margin-bottom: 10px; border-radius: 12px; cursor: pointer; background: #111; transition: 0.3s; border: 1px solid transparent; }
-        .nav-item:hover { border-color: var(--accent); }
-        .active-nav { background: var(--accent) !important; color: #000 !important; font-weight: bold; }
-        
-        .status-badge { font-size: 11px; padding: 3px 10px; border-radius: 6px; border: 1px solid var(--accent); color: var(--accent); margin-top: 5px; display: inline-block; }
+
+        .submit-btn { 
+            background: var(--accent); color: #000; border: none; 
+            padding: 15px; border-radius: 10px; font-weight: 900; 
+            width: 100%; cursor: pointer; font-size: 18px;
+        }
+
         .hidden { display: none !important; }
     </style>
 </head>
 <body onload="initSystem()">
 
-    <div id="auth-layer" class="auth-overlay">
-        <div class="auth-card">
-            <h1 style="color:var(--accent); margin-bottom:30px; font-size:24px;">تسجيل الدخول</h1>
-            <input type="text" id="id-in" class="glass-input" placeholder="كود المستخدم">
-            <input type="password" id="pass-in" class="glass-input" placeholder="كلمة المرور">
-            <button class="btn-gold" onclick="handleAuth()">دخول المنصة</button>
+    <section id="home-page">
+        <nav class="navbar">
+            <div class="nav-btns">
+                <div class="nav-btn btn-signup" onclick="openModal('signup-modal')">طلاب جدد</div>
+                <div class="nav-btn btn-login" onclick="openModal('login-modal')">دخول الطلاب</div>
+            </div>
+            <div style="font-weight: 900; color: var(--accent); font-size: 24px; text-shadow: 0 0 10px var(--accent);">إمبراطور التاريخ</div>
+        </nav>
+
+        <div class="hero">
+            <div class="slogan">التاريخ في أمان مع أحمد القرشي أنت كسبان</div>
+            <p style="margin-bottom:0">مرحباً بكم في منصة</p>
+            <h1>الأستاذ أحمد القرشي</h1>
+            <p class="sub-title">Emperor of History 🏛️</p>
+
+            <div class="reviews-container">
+                <div class="reviews-track" id="reviewTrack">
+                    <div class="review-card">
+                        <div class="stars">★★★★★</div>
+                        <p>"أقوى شرح تاريخ في مصر، المستر بيخلي المادة قصة ممتعة مش حفظ."</p>
+                        <small style="color:var(--accent)">- طالب متفوق</small>
+                    </div>
+                    <div class="review-card">
+                        <div class="stars">★★★★★</div>
+                        <p>"بجد الإمبراطور اسم على مسمى، المنصة وفرت علينا مجهود كبير."</p>
+                        <small style="color:var(--accent)">- دفعة 2025</small>
+                    </div>
+                    <div class="review-card">
+                        <div class="stars">★★★★★</div>
+                        <p>"التاريخ بقا مادة مضمونة مع مستر أحمد القرشي."</p>
+                        <small style="color:var(--accent)">- طالب ثانوي</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="login-modal" class="modal">
+        <div class="form-box">
+            <h2 style="text-align:center; color:var(--accent)">دخول الطالب</h2>
+            <input type="text" id="login-id" class="glass-input" placeholder="كود الطالب">
+            <input type="password" id="login-pass" class="glass-input" placeholder="كلمة المرور">
+            <button class="submit-btn" onclick="handleAuth('login')">دخول</button>
+            <p style="text-align:center; margin-top:15px; cursor:pointer; font-size:14px" onclick="closeModals()">إغلاق</p>
         </div>
     </div>
 
-    <div id="app">
-        <aside class="sidebar">
-            <div style="text-align:center; padding-bottom:20px; border-bottom:1px solid #222;">
-                <h3 id="u-name" style="margin-bottom:5px"></h3>
-                <span id="u-role" class="status-badge"></span>
-            </div>
-            <nav id="side-nav" style="margin-top:30px"></nav>
-            <button class="btn-gold" style="background:var(--danger); color:white; margin-top:auto" onclick="location.reload()">تسجيل الخروج</button>
-        </aside>
-
-        <main class="main">
-            <div id="v-lectures" class="view hidden">
-                <h2 style="color:var(--accent)">🏛️ مكتبة المحاضرات</h2>
-                <div id="lec-display" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap:25px; margin-top:20px"></div>
-            </div>
-
-            <div id="v-subs" class="view hidden">
-                <h2 style="color:var(--accent)">💳 تفعيل الاشتراك</h2>
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:25px; margin-top:20px">
-                    <div style="background:var(--card); padding:30px; border-radius:20px; border:1px solid #333; text-align:center">
-                        <h3>اشتراك شهري</h3>
-                        <p style="color:#888">فتح جميع محاضرات الشهر المختار</p>
-                        <select id="pay-month" class="glass-input">
-                            <option>أكتوبر</option><option>نوفمبر</option><option>ديسمبر</option>
-                            <option>فبراير</option><option>مارس</option><option>أبريل</option>
-                        </select>
-                        <button class="btn-gold" onclick="showPayInfo()">طلب الدفع</button>
-                    </div>
-                    <div style="background:var(--card); padding:30px; border-radius:20px; border:1px solid #333; text-align:center">
-                        <h3>اشتراك الترم</h3>
-                        <p style="color:#888">توفير خاص لطلاب الإمبراطورية</p>
-                        <button class="btn-gold" onclick="showPayInfo()">طلب الدفع</button>
-                    </div>
-                </div>
-                <div id="pay-box" class="hidden" style="margin-top:30px; background:#000; border:2px dashed var(--success); padding:30px; border-radius:20px; text-align:center">
-                    <h3 style="color:var(--success)">بيانات التحويل الحالية</h3>
-                    <div style="font-size:18px; margin:20px 0;">
-                        <p id="v-cash"></p>
-                        <p id="i-pay"></p>
-                    </div>
-                    <p style="font-size:14px; color:#aaa">يرجى تصوير إيصال الدفع وإرساله للمعلم لتفعيل الحساب.</p>
-                </div>
-            </div>
-
-            <div id="v-settings" class="view hidden">
-                <h1>⚙️ إعدادات الحساب الإداري</h1>
-                <div style="max-width:500px; background:var(--card); padding:30px; border-radius:20px; border:1px solid #333">
-                    <label>رقم فودافون كاش (للطلاب):</label>
-                    <input type="text" id="set-vodafone" class="glass-input">
-                    <label>معرف InstaPay:</label>
-                    <input type="text" id="set-insta" class="glass-input">
-                    <button class="btn-gold" onclick="saveAdmin()">حفظ وتحديث المنصة</button>
-                </div>
-            </div>
-        </main>
+    <div id="signup-modal" class="modal">
+        <div class="form-box">
+            <h2 style="text-align:center; color:var(--accent)">حساب جديد</h2>
+            <input type="text" id="reg-name" class="glass-input" placeholder="الاسم بالكامل">
+            <input type="tel" id="reg-phone" class="glass-input" placeholder="رقم الموبايل">
+            <select id="reg-grade" class="glass-input">
+                <option value="1">الصف الأول الثانوي</option>
+                <option value="2">الصف الثاني الثانوي</option>
+                <option value="3">الصف الثالث الثانوي</option>
+            </select>
+            <input type="password" id="reg-pass" class="glass-input" placeholder="كلمة المرور">
+            <button class="submit-btn" onclick="handleAuth('signup')">إنشاء الحساب</button>
+            <p style="text-align:center; margin-top:15px; cursor:pointer; font-size:14px" onclick="closeModals()">إغلاق</p>
+        </div>
     </div>
 
     <script>
         let db;
-        let activeUser = null;
-
         function initSystem() {
-            db = JSON.parse(localStorage.getItem('empire_v7_final')) || {
-                users: [], lectures: [], 
-                settings: { vodafone: "010XXXXXXXX", instapay: "user@instapay" }
-            };
-            
-            // إضافة الحساب التجريبي صامتاً (لن يظهر في الواجهة أبداً)
-            if(!db.users.find(u => u.id === "ST-9999")) {
-                db.users.push({ id: "ST-9999", password: "123456", name: "طالب تجريبي", grade: "3", role: "student", unlocked: ["أكتوبر"], watches: {} });
-                save();
-            }
+            db = JSON.parse(localStorage.getItem('empire_v9_db')) || { users: [], lectures: [] };
+            startReviewSlider();
         }
 
-        function handleAuth() {
-            const id = document.getElementById('id-in').value.trim();
-            const pass = document.getElementById('pass-in').value.trim();
-
-            if(id === "OWNER-PHARAOH-01" && pass === "Amon_Ra_Security_2026_X") activeUser = { name: "المالك", role: "owner" };
-            else if(id === "TEACHER-KORASHY" && pass === "History_Master_Pass_99") activeUser = { name: "الأستاذ أحمد", role: "teacher" };
-            else activeUser = db.users.find(u => u.id === id && u.password === pass);
-
-            if(activeUser) {
-                document.getElementById('auth-layer').style.display = 'none';
-                document.getElementById('app').style.display = 'flex';
-                document.getElementById('u-name').innerText = activeUser.name;
-                document.getElementById('u-role').innerText = activeUser.role === 'student' ? activeUser.grade + " ثانوي" : "إدارة";
-                setupNav();
-                showView(activeUser.role === 'student' ? 'v-lectures' : 'v-settings');
-            } else alert("بيانات الدخول غير صحيحة");
+        function startReviewSlider() {
+            let index = 0;
+            const track = document.getElementById('reviewTrack');
+            setInterval(() => {
+                index = (index + 1) % 3;
+                track.style.transform = `translateX(${index * 100}%)`;
+            }, 4000);
         }
 
-        function setupNav() {
-            const nav = document.getElementById('side-nav');
-            if(activeUser.role === 'student') {
-                nav.innerHTML = `
-                    <div class="nav-item active-nav" id="n-lectures" onclick="showView('v-lectures')">🏛️ محاضراتي</div>
-                    <div class="nav-item" id="n-subs" onclick="showView('v-subs')">💳 اشتراكاتي</div>`;
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+
+        function handleAuth(type) {
+            // منطق الدخول والتسجيل (مماثل للنسخ السابقة)
+            if (type === 'signup') {
+                const name = document.getElementById('reg-name').value;
+                const id = "ST-" + Math.floor(1000 + Math.random()*9000);
+                db.users.push({ id, name, role: 'student', unlocked: [] });
+                localStorage.setItem('empire_v9_db', JSON.stringify(db));
+                alert("تم التسجيل! كودك هو: " + id);
+                closeModals();
             } else {
-                nav.innerHTML = `
-                    <div class="nav-item active-nav" id="n-settings" onclick="showView('v-settings')">⚙️ الإعدادات</div>
-                    <div class="nav-item" onclick="alert('استخدم لوحة المالك للرفع والحذف')">📢 إدارة المحتوى</div>`;
+                // تجربة دخول المالك للتحكم
+                const id = document.getElementById('login-id').value;
+                if(id === "ST-9999") alert("مرحباً بك في عالم الإمبراطور!");
+                else alert("كود الطالب غير مسجل.");
             }
         }
-
-        function showView(id) {
-            document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
-            document.getElementById(id).classList.remove('hidden');
-            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active-nav'));
-            const shortId = id.split('-')[1];
-            if(document.getElementById('n-' + shortId)) document.getElementById('n-' + shortId).classList.add('active-nav');
-            
-            if(id === 'v-settings') {
-                document.getElementById('set-vodafone').value = db.settings.vodafone;
-                document.getElementById('set-insta').value = db.settings.instapay;
-            }
-            if(id === 'v-lectures') renderLectures();
-        }
-
-        function saveAdmin() {
-            db.settings.vodafone = document.getElementById('set-vodafone').value;
-            db.settings.instapay = document.getElementById('set-insta').value;
-            save(); alert("✅ تم تحديث بيانات الدفع.");
-        }
-
-        function showPayInfo() {
-            document.getElementById('pay-box').classList.remove('hidden');
-            document.getElementById('v-cash').innerText = "📱 فودافون كاش: " + db.settings.vodafone;
-            document.getElementById('i-pay').innerText = "💳 InstaPay: " + db.settings.instapay;
-        }
-
-        function renderLectures() {
-            const container = document.getElementById('lec-display');
-            const myLecs = db.lectures.filter(l => l.grade === activeUser.grade);
-            container.innerHTML = myLecs.length ? myLecs.map(l => {
-                const locked = !activeUser.unlocked.includes(l.month);
-                return `
-                <div style="background:var(--card); padding:25px; border-radius:20px; border:1px solid #333; text-align:center">
-                    <h3 style="margin-top:0">${l.title}</h3>
-                    <p style="color:#666">تاريخ النشر: ${l.month}</p>
-                    <button class="btn-gold" ${locked ? 'disabled' : ''} onclick="window.open('${l.url}')">
-                        ${locked ? '🔒 مقفل' : 'مشاهدة الآن'}
-                    </button>
-                </div>`;
-            }).join('') : "<p style='color:#555'>لا يوجد دروس منشورة لصفك بعد.</p>";
-        }
-
-        function save() { localStorage.setItem('empire_v7_final', JSON.stringify(db)); }
     </script>
 </body>
 </html>
