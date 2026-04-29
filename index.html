@@ -3,45 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إمبراطورية التاريخ | النسخة الشاملة v2026.3</title>
+    <title>منصة الإمبراطور | أحمد القرشي</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root { --gold: #D4AF37; --bg: #050505; --card: #111; --text: #fff; --red: #ff4d4d; --green: #2ecc71; }
         body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Cairo', sans-serif; overflow-x: hidden; }
 
-        /* --- Notifications --- */
+        /* Notifications */
         #notification-container { position: fixed; top: 20px; left: 20px; z-index: 10000; }
-        .toast { background: var(--card); border-right: 5px solid var(--gold); color: white; padding: 15px 25px; margin-bottom: 10px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); animation: slideIn 0.5s ease; min-width: 250px; border: 1px solid rgba(212, 175, 55, 0.3); }
+        .toast { background: var(--card); border-right: 5px solid var(--gold); color: white; padding: 15px 25px; margin-bottom: 10px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); animation: slideIn 0.5s ease; min-width: 280px; border: 1px solid rgba(212, 175, 55, 0.3); }
         @keyframes slideIn { from { transform: translateX(-100%); } to { transform: translateX(0); } }
 
-        /* --- Landing Page --- */
+        /* Landing Page */
         .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-attachment: fixed; }
         .navbar { position: fixed; top:0; width:100%; padding:15px; display:flex; justify-content:space-around; background:rgba(0,0,0,0.8); backdrop-filter:blur(15px); z-index:1000; border-bottom:1px solid var(--gold); }
-        .slogan { border:1px solid var(--gold); padding:8px 30px; border-radius:50px; margin-bottom:20px; background: rgba(212, 175, 55, 0.1); color: var(--gold); font-weight: bold; }
-        .btn { padding:10px 25px; border-radius:12px; cursor:pointer; font-weight:bold; border:none; transition:0.3s; font-family: 'Cairo'; display: inline-block; text-decoration: none; text-align: center; }
+        .btn { padding:10px 25px; border-radius:12px; cursor:pointer; font-weight:bold; border:none; transition:0.3s; font-family: 'Cairo'; display: inline-block; text-align: center; }
         .btn-gold { background: var(--gold); color:#000; }
         .btn-outline { background:transparent; border:1px solid var(--gold); color:var(--gold); }
 
-        /* --- Review Slider --- */
+        /* Slider */
         .reviews-container { width: 100%; max-width: 600px; margin-top: 30px; overflow: hidden; background: rgba(0,0,0,0.6); border-radius: 20px; border: 1px solid rgba(212, 175, 55, 0.2); backdrop-filter: blur(10px); }
         .reviews-track { display: flex; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
         .review-card { min-width: 100%; padding: 25px; box-sizing: border-box; text-align: center; }
-        .stars { color: var(--gold); margin-bottom: 10px; font-size: 1.2rem; }
 
-        /* --- Dashboard --- */
+        /* Dashboard */
         #dashboard { display:none; min-height:100vh; flex-direction:row; }
         .sidebar { width:280px; background:#000; border-left:1px solid #222; padding:25px; display:flex; flex-direction:column; }
         .main-content { flex:1; padding:40px; background:#080808; overflow-y: auto; height: 100vh; }
-        .card { background:var(--card); padding:25px; border-radius:18px; border:1px solid #222; margin-bottom:25px; position: relative; }
+        .card { background:var(--card); padding:25px; border-radius:18px; border:1px solid #222; margin-bottom:25px; }
 
-        /* --- Video Protection --- */
+        /* Video */
         .video-container { position:relative; width:100%; border-radius:15px; overflow:hidden; border:2px solid var(--gold); background: #000; }
-        #watermark { position:absolute; color:rgba(255,255,255,0.2); font-weight:bold; pointer-events:none; z-index:99; transition:3s linear; white-space:nowrap; font-size: 14px; }
+        #watermark { position:absolute; color:rgba(255,255,255,0.2); font-weight:bold; pointer-events:none; z-index:99; transition:3s linear; white-space:nowrap; }
         
         input, select, textarea { width:100%; padding:12px; margin:10px 0; background:#1a1a1a; border:1px solid #333; color:#fff; border-radius:8px; font-family: 'Cairo'; box-sizing: border-box; }
         .hidden { display:none !important; }
         .modal { position:fixed; inset:0; background:rgba(0,0,0,0.95); display:none; justify-content:center; align-items:center; z-index:9999; }
         .form-box { background:#111; padding:30px; border-radius:20px; border:2px solid var(--gold); width:350px; }
+        .password-hint { font-size: 11px; color: #888; margin-top: -5px; margin-bottom: 10px; }
     </style>
 </head>
 <body onload="initSystem()">
@@ -51,26 +50,18 @@
     <section id="home-view">
         <nav class="navbar">
             <div style="display:flex; gap:15px">
-                <button class="btn btn-gold" onclick="openModal('login-modal')">دخول الطلاب</button>
-                <button class="btn btn-outline" onclick="openModal('signup-modal')">تسجيل جديد</button>
+                <button class="btn btn-gold" onclick="openModal('login-modal')">دخول</button>
+                <button class="btn btn-outline" onclick="openModal('signup-modal')">حساب جديد</button>
             </div>
             <div style="color:var(--gold); font-weight:900; font-size:24px">إمبراطور التاريخ</div>
         </nav>
         <div class="hero">
-            <div class="slogan">التاريخ في أمان مع أحمد القرشي أنت كسبان</div>
-            <h1>الأستاذ أحمد القرشي</h1>
+            <div style="border:1px solid var(--gold); padding:8px 30px; border-radius:50px; margin-bottom:20px; color: var(--gold);">التاريخ في أمان مع أحمد القرشي</div>
+            <h1 style="font-size:3rem;">الأستاذ أحمد القرشي</h1>
             <div class="reviews-container">
                 <div class="reviews-track" id="reviewTrack">
-                    <div class="review-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"أقوى شرح تاريخ في مصر، المستر بيخلي المادة قصة ممتعة مش حفظ."</p>
-                        <small style="color:var(--gold)">- طالب بالثانوية العامة</small>
-                    </div>
-                    <div class="review-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"التاريخ في أمان فعلاً، المنصة مريحة جداً والحماية فيها قوية."</p>
-                        <small style="color:var(--gold)">- دفعة 2026</small>
-                    </div>
+                    <div class="review-card"><p>"أقوى شرح تاريخ في مصر."</p></div>
+                    <div class="review-card"><p>"المنصة حمايتها جبارة."</p></div>
                 </div>
             </div>
         </div>
@@ -78,54 +69,43 @@
 
     <div id="dashboard">
         <aside class="sidebar">
-            <h2 id="u-name" style="color:var(--gold); margin-bottom:0"></h2>
-            <span id="u-rank" style="opacity:0.5; font-size:13px"></span>
-            <hr style="width:100%; border:0; border-top:1px solid #222; margin:25px 0">
+            <h2 id="u-name" style="color:var(--gold);"></h2>
             <div id="nav-links"></div>
-            <button class="btn btn-gold" style="background:var(--red); color:#fff; margin-top:auto" onclick="location.reload()">تسجيل خروج</button>
+            <button class="btn btn-gold" style="background:var(--red); color:white; margin-top:auto" onclick="location.reload()">خروج</button>
         </aside>
 
         <main class="main-content">
             <div id="sec-teacher" class="sec hidden">
-                <h1>🏛️ لوحة المعلم</h1>
+                <h1>🏛️ لوحة التحكم</h1>
                 <div class="card">
-                    <h3>إطلاق محاضرة</h3>
+                    <h3>نشر فيديو جديد من جهازك</h3>
                     <input type="text" id="lec-title" placeholder="عنوان الدرس">
-                    <input type="text" id="lec-url" placeholder="رابط الفيديو">
-                    <button class="btn btn-gold" onclick="addLecture()">نشر الآن</button>
+                    <input type="file" id="lec-file" accept="video/*"> <button class="btn btn-gold" onclick="addLecture()">رفع الفيديو الآن</button>
+                    <progress id="upload-progress" value="0" max="100" style="width:100%; margin-top:10px; display:none;"></progress>
                 </div>
                 <div id="lec-list-teacher"></div>
-                <div class="card"><h3>❓ أسئلة الطلاب</h3><div id="teacher-questions"></div></div>
             </div>
 
             <div id="sec-staff" class="sec hidden">
-                <h1>📋 تفعيل الاشتراكات</h1>
+                <h1>📋 تفعيل الطلاب</h1>
                 <div class="card">
-                    <input type="text" id="staff-st-id" placeholder="كود الطالب">
+                    <input type="text" id="staff-st-id" placeholder="كود الطالب ST-XXXX">
                     <select id="staff-lec-select"></select>
                     <select id="staff-type">
                         <option value="Center">سنتر (3 مشاهدات)</option>
-                        <option value="Online">أونلاين (مفتوح)</option>
+                        <option value="Online">أونلاين (غير محدود)</option>
                     </select>
-                    <button class="btn btn-gold" style="width:100%" onclick="activateAndNotify()">تفعيل السيشن</button>
+                    <button class="btn btn-gold" style="width:100%" onclick="activateAndNotify()">تفعيل</button>
                 </div>
             </div>
 
-            <div id="sec-student-subs" class="sec hidden">
-                <h1>💳 حالة اشتراكاتي</h1>
-                <div id="student-subs-list"></div>
-            </div>
-
+            <div id="sec-student-subs" class="sec hidden"><h1>💳 اشتراكاتي</h1><div id="student-subs-list"></div></div>
             <div id="sec-student-lecs" class="sec hidden">
-                <h1>🎥 المحاضرات المفعلة</h1>
+                <h1>🎥 فيديوهاتي</h1>
                 <div id="student-lectures"></div>
                 <div id="video-area" class="hidden">
                     <div class="video-container"><div id="watermark"></div><video id="main-v" width="100%" controls controlsList="nodownload"></video></div>
-                    <div class="card" style="margin-top:20px">
-                        <h3>اسأل المستر</h3>
-                        <textarea id="st-q" placeholder="اكتب سؤالك..."></textarea>
-                        <button class="btn btn-gold" onclick="sendQ()">إرسال</button>
-                    </div>
+                    <div class="card" style="margin-top:20px"><h3>اسأل المستر</h3><textarea id="st-q"></textarea><button class="btn btn-gold" onclick="sendQ()">إرسال</button></div>
                 </div>
             </div>
         </main>
@@ -133,22 +113,19 @@
 
     <div id="signup-modal" class="modal"><div class="form-box">
         <h2 style="color:var(--gold); text-align:center">تسجيل جديد</h2>
-        <input type="text" id="s-name" placeholder="الاسم بالكامل">
-        <input type="tel" id="s-parent" placeholder="رقم ولي الأمر">
-        <select id="s-stage">
-            <option value="" disabled selected>المرحلة الدراسية</option>
-            <option value="1">الأول الثانوي</option>
-            <option value="2">الثاني الثانوي</option>
-            <option value="3">الثالث الثانوي</option>
-        </select>
-        <input type="password" id="s-pass" placeholder="كلمة المرور"> <button class="btn btn-gold" style="width:100%" onclick="signup()">إنشاء حساب</button>
+        <input type="text" id="s-name" placeholder="الاسم">
+        <select id="s-stage"><option value="1">أول ثانوي</option><option value="2">ثاني ثانوي</option><option value="3">ثالث ثانوي</option></select>
+        <input type="password" id="s-pass" placeholder="كلمة المرور">
+        <div class="password-hint">يجب أن تكون 8 رموز على الأقل، تحتوي على رقم ورمز خاص (@#$!).</div>
+        <button class="btn btn-gold" style="width:100%" onclick="signup()">إنشاء حساب</button>
         <p onclick="closeModals()" style="text-align:center; cursor:pointer">إغلاق</p>
     </div></div>
 
     <div id="login-modal" class="modal"><div class="form-box">
         <h2 style="color:var(--gold); text-align:center">دخول</h2>
-        <input type="text" id="l-id" placeholder="كود الطالب">
-        <input type="password" id="l-pass" placeholder="كلمة المرور"> <button class="btn btn-gold" style="width:100%" onclick="login()">دخول</button>
+        <input type="text" id="l-id" placeholder="الكود">
+        <input type="password" id="l-pass" placeholder="كلمة المرور">
+        <button class="btn btn-gold" style="width:100%" onclick="login()">دخول</button>
         <p onclick="closeModals()" style="text-align:center; cursor:pointer">إغلاق</p>
     </div></div>
 
@@ -156,19 +133,28 @@
         let db; let activeUser = null; let curLecId = null;
 
         function initSystem() {
-            db = JSON.parse(localStorage.getItem('empire_v2026_3')) || { 
-                users: [{id: "BOSS-OWNER", name: "المالك", password: "123", role: "boss"}, {id: "TEACHER-AHMED", name: "أحمد القرشي", password: "123", role: "teacher"}, {id: "STAFF-01", name: "مساعد 1", password: "123", role: "staff"}],
+            db = JSON.parse(localStorage.getItem('empire_v2026_4')) || { 
+                users: [
+                    {id: "BOSS-OWNER", name: "المالك", password: "Boss@2026", role: "boss"}, 
+                    {id: "TEACHER-AHMED", name: "أحمد القرشي", password: "Emperor#1", role: "teacher"},
+                    {id: "STAFF-01", name: "مساعد 1", password: "Staff!2026", role: "staff"}
+                ],
                 lectures: [], questions: []
             };
             startReviewSlider();
         }
 
+        function validatePassword(pass) {
+            const regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
+            return regex.test(pass);
+        }
+
         function signup() {
-            const id = "ST-" + Math.floor(1000 + Math.random() * 9000);
             const pass = document.getElementById('s-pass').value;
-            if(!pass) return notify("يرجى كتابة كلمة مرور!");
-            db.users.push({id, name: document.getElementById('s-name').value, stage: document.getElementById('s-stage').value, parent: document.getElementById('s-parent').value, password: pass, role: "student", access: {}});
-            save(); notify("كودك هو: " + id); closeModals();
+            if(!validatePassword(pass)) return notify("كلمة المرور ضعيفة جداً! اتبع التعليمات.");
+            const id = "ST-" + Math.floor(1000 + Math.random() * 9000);
+            db.users.push({id, name: document.getElementById('s-name').value, stage: document.getElementById('s-stage').value, password: pass, role: "student", access: {}});
+            save(); notify("تم التسجيل! كودك: " + id); closeModals();
         }
 
         function login() {
@@ -178,8 +164,35 @@
                 document.getElementById('home-view').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'flex';
                 document.getElementById('u-name').innerText = activeUser.name;
-                renderNav(); closeModals(); notify("أهلاً بك");
+                renderNav(); closeModals(); notify("أهلاً يا إمبراطور");
             } else notify("بيانات خاطئة!");
+        }
+
+        function addLecture() {
+            const title = document.getElementById('lec-title').value;
+            const fileInput = document.getElementById('lec-file');
+            const file = fileInput.files[0];
+            const progress = document.getElementById('upload-progress');
+
+            if(!title || !file) return notify("من فضلك اختر ملف الفيديو واكتب العنوان");
+
+            progress.style.display = 'block';
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                db.lectures.push({id: Date.now(), title, url: e.target.result});
+                save(); 
+                progress.style.display = 'none';
+                notify("تم رفع الفيديو بنجاح من جهازك!");
+                renderTeacher();
+            };
+
+            reader.onprogress = function(data) {
+                if (data.lengthComputable) {
+                    progress.value = Math.round((data.loaded / data.total) * 100);
+                }
+            };
+            reader.readAsDataURL(file);
         }
 
         function renderNav() {
@@ -187,28 +200,18 @@
             if(activeUser.role === 'student') {
                 nav.innerHTML += `<button class="btn btn-outline" style="width:100%; margin-bottom:10px" onclick="showSec('sec-student-subs'); renderSubs();">💳 اشتراكاتي</button>`;
                 nav.innerHTML += `<button class="btn btn-outline" style="width:100%; margin-bottom:10px" onclick="showSec('sec-student-lecs'); renderStudentLecs();">🎥 المحاضرات</button>`;
-            } else if(activeUser.role === 'teacher' || activeUser.role === 'boss') {
-                nav.innerHTML += `<button class="btn btn-outline" style="width:100%; margin-bottom:10px" onclick="showSec('sec-teacher'); renderTeacher();">🏛️ إدارة المنصة</button>`;
-            }
-            if(activeUser.role === 'staff' || activeUser.role === 'boss') {
+            } else {
+                if(activeUser.role !== 'staff') nav.innerHTML += `<button class="btn btn-outline" style="width:100%; margin-bottom:10px" onclick="showSec('sec-teacher'); renderTeacher();">🏛️ إدارة الدروس</button>`;
                 nav.innerHTML += `<button class="btn btn-outline" style="width:100%; margin-bottom:10px" onclick="showSec('sec-staff'); renderStaff();">📋 تفعيل الطلاب</button>`;
             }
-        }
-
-        function renderSubs() {
-            const div = document.getElementById('student-subs-list');
-            div.innerHTML = db.lectures.map(l => {
-                const acc = activeUser.access[l.id];
-                const status = acc ? (acc.unlimited ? "مفعل (Online)" : `مفعل (سنتر - ${acc.views} مشاهدات)`) : "غير مفعل";
-                return `<div class="card"><strong>${l.title}</strong> <span style="float:left; color:var(--gold)">${status}</span></div>`;
-            }).join('') || "لا توجد محاضرات حالياً";
         }
 
         function activateAndNotify() {
             const st = db.users.find(u => u.id === document.getElementById('staff-st-id').value);
             const lecId = document.getElementById('staff-lec-select').value;
             const type = document.getElementById('staff-type').value;
-            if(!st) return notify("كود خطأ!");
+            if(!st) return notify("كود الطالب خطأ");
+            if(!st.access) st.access = {};
             st.access[lecId] = (type === "Center") ? { views: 3, unlimited: false } : { views: Infinity, unlimited: true };
             save(); notify("تم التفعيل بنجاح!");
         }
@@ -218,8 +221,8 @@
             div.innerHTML = db.lectures.map(l => {
                 const acc = activeUser.access[l.id];
                 if(!acc || (acc.views <= 0 && !acc.unlimited)) return "";
-                return `<div class="card"><h3>${l.title}</h3><button class="btn btn-gold" onclick="playV('${l.id}')">شاهد الآن</button></div>`;
-            }).join('') || "<p>لا توجد محاضرات مفعلة لك حالياً، راجع تبويب الاشتراكات.</p>";
+                return `<div class="card"><h3>${l.title}</h3><button class="btn btn-gold" onclick="playV('${l.id}')">شاهد</button></div>`;
+            }).join('') || "لا يوجد محاضرات مفعلة";
         }
 
         function playV(id) {
@@ -228,21 +231,27 @@
             save(); curLecId = id;
             document.getElementById('video-area').classList.remove('hidden');
             document.getElementById('main-v').src = lec.url;
-            document.getElementById('main-v').play();
             startWatermark(); renderStudentLecs();
         }
 
+        function renderSubs() {
+            document.getElementById('student-subs-list').innerHTML = db.lectures.map(l => {
+                const acc = activeUser.access[l.id];
+                const s = acc ? (acc.unlimited ? "Online (Unlimited)" : `Center (${acc.views} Views)`) : "غير مفعل";
+                return `<div class="card">${l.title} <span style="float:left; color:var(--gold)">${s}</span></div>`;
+            }).join('');
+        }
+
+        function renderTeacher() { document.getElementById('lec-list-teacher').innerHTML = db.lectures.map(l => `<div class="card">${l.title}</div>`).join(''); }
+        function renderStaff() { document.getElementById('staff-lec-select').innerHTML = db.lectures.map(l => `<option value="${l.id}">${l.title}</option>`).join(''); }
         function showSec(id) { document.querySelectorAll('.sec').forEach(s => s.classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); }
-        function save() { localStorage.setItem('empire_v2026_3', JSON.stringify(db)); }
+        function save() { localStorage.setItem('empire_v2026_4', JSON.stringify(db)); }
         function notify(m) { const c = document.getElementById('notification-container'); const t = document.createElement('div'); t.className='toast'; t.innerText=m; c.appendChild(t); setTimeout(()=>t.remove(),4000); }
         function openModal(id) { document.getElementById(id).style.display='flex'; }
         function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display='none'); }
-        function startReviewSlider() { let idx = 0; setInterval(() => { idx = (idx + 1) % 2; document.getElementById('reviewTrack').style.transform = `translateX(${idx * 100}%)`; }, 4000); }
+        function startReviewSlider() { let i = 0; setInterval(() => { i = (i + 1) % 2; if(document.getElementById('reviewTrack')) document.getElementById('reviewTrack').style.transform = `translateX(${i * 100}%)`; }, 4000); }
         function startWatermark() { setInterval(() => { const wm = document.getElementById('watermark'); wm.innerText = `${activeUser.id} | ${activeUser.name}`; wm.style.top = Math.random()*80+"%"; wm.style.left = Math.random()*70+"%"; }, 3000); }
-        function addLecture() { db.lectures.push({id: Date.now(), title: document.getElementById('lec-title').value, url: document.getElementById('lec-url').value}); save(); notify("تم النشر"); renderTeacher(); }
-        function renderTeacher() { document.getElementById('lec-list-teacher').innerHTML = db.lectures.map(l => `<div class="card">${l.title}</div>`).join(''); }
-        function renderStaff() { document.getElementById('staff-lec-select').innerHTML = db.lectures.map(l => `<option value="${l.id}">${l.title}</option>`).join(''); }
-        function sendQ() { db.questions.push({studentName: activeUser.name, text: document.getElementById('st-q').value, lecTitle: db.lectures.find(l=>l.id==curLecId).title}); save(); notify("تم الإرسال"); document.getElementById('st-q').value=''; }
+        function sendQ() { notify("تم الإرسال للمستر"); document.getElementById('st-q').value=''; }
     </script>
 </body>
-                            </html>
+</html>
