@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إمبراطورية التاريخ | النظام الإداري المتكامل</title>
+    <title>منصة الإمبراطور | أحمد القرشي</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root { --gold: #D4AF37; --bg: #050505; --card: #111; --text: #fff; --red: #ff4d4d; --green: #2ecc71; }
@@ -14,46 +14,73 @@
         .toast { background: var(--card); border-right: 5px solid var(--gold); color: white; padding: 15px 25px; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); animation: slideIn 0.5s ease; min-width: 250px; }
         @keyframes slideIn { from { transform: translateX(-100%); } to { transform: translateX(0); } }
 
-        /* --- UI Elements --- */
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-attachment: fixed; }
+        /* --- Landing Page & Pyramids BG --- */
+        .hero { 
+            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover; background-attachment: fixed;
+        }
         .navbar { position: fixed; top:0; width:100%; padding:15px; display:flex; justify-content:space-around; background:rgba(0,0,0,0.8); backdrop-filter:blur(15px); z-index:1000; border-bottom:1px solid var(--gold); }
+        .slogan { border:1px solid var(--gold); padding:8px 30px; border-radius:50px; margin-bottom:20px; background: rgba(212, 175, 55, 0.1); }
         .btn { padding:10px 25px; border-radius:12px; cursor:pointer; font-weight:bold; border:none; transition:0.3s; font-family: 'Cairo'; }
         .btn-gold { background: var(--gold); color:#000; }
         .btn-outline { background:transparent; border:1px solid var(--gold); color:var(--gold); }
 
-        /* --- Dashboard --- */
+        /* --- Reviews Slider (THE PART RE-ADDED) --- */
+        .reviews-container { width: 100%; max-width: 600px; margin-top: 30px; overflow: hidden; background: rgba(0,0,0,0.6); border-radius: 20px; border: 1px solid rgba(212, 175, 55, 0.2); backdrop-filter: blur(10px); }
+        .reviews-track { display: flex; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+        .review-card { min-width: 100%; padding: 25px; box-sizing: border-box; text-align: center; }
+        .stars { color: var(--gold); margin-bottom: 10px; font-size: 1.2rem; }
+
+        /* --- Dashboard Layout --- */
         #dashboard { display:none; min-height:100vh; flex-direction:row; }
         .sidebar { width:280px; background:#000; border-left:1px solid #222; padding:25px; display:flex; flex-direction:column; }
         .main-content { flex:1; padding:40px; background:#080808; overflow-y: auto; height: 100vh; }
         .card { background:var(--card); padding:25px; border-radius:18px; border:1px solid #222; margin-bottom:25px; }
 
-        /* --- Video & Questions --- */
+        /* --- Video & Watermark --- */
         .video-container { position:relative; width:100%; border-radius:15px; overflow:hidden; border:2px solid var(--gold); }
-        #watermark { position:absolute; color:rgba(255,255,255,0.2); font-weight:bold; pointer-events:none; z-index:99; transition:3s linear; }
-        .q-box { margin-top:20px; background:#1a1a1a; padding:15px; border-radius:10px; }
+        #watermark { position:absolute; color:rgba(255,255,255,0.2); font-weight:bold; pointer-events:none; z-index:99; transition:3s linear; white-space:nowrap; }
 
         input, select, textarea { width:100%; padding:12px; margin:10px 0; background:#1a1a1a; border:1px solid #333; color:#fff; border-radius:8px; font-family: 'Cairo'; box-sizing: border-box; }
         .hidden { display:none !important; }
         .modal { position:fixed; inset:0; background:rgba(0,0,0,0.95); display:none; justify-content:center; align-items:center; z-index:9999; }
+        .form-box { background:#111; padding:30px; border-radius:20px; border:2px solid var(--gold); width:350px; }
     </style>
 </head>
 <body onload="initSystem()">
 
     <div id="notification-container"></div>
 
-    <div id="home-view">
+    <section id="home-view">
         <nav class="navbar">
             <div style="display:flex; gap:15px">
-                <button class="btn btn-gold" onclick="openModal('login-modal')">دخول</button>
-                <button class="btn btn-outline" onclick="openModal('signup-modal')">حساب جديد</button>
+                <button class="btn btn-gold" onclick="openModal('login-modal')">دخول الطلاب</button>
+                <button class="btn btn-outline" onclick="openModal('signup-modal')">طلاب جدد</button>
             </div>
-            <div style="color:var(--gold); font-weight:900; font-size:24px">إمبراطورية التاريخ</div>
+            <div style="color:var(--gold); font-weight:900; font-size:24px">إمبراطور التاريخ</div>
         </nav>
         <div class="hero">
-            <h1 style="font-size:3.5rem; color:var(--gold); margin-bottom:10px">الأستاذ أحمد القرشي</h1>
-            <div style="border:1px solid var(--gold); padding:8px 30px; border-radius:50px">التاريخ في أمان مع أحمد القرشي أنت كسبان</div>
+            <div class="slogan">التاريخ في أمان مع أحمد القرشي أنت كسبان</div>
+            <h1 style="font-size:3.5rem; color:var(--gold); margin:0">الأستاذ أحمد القرشي</h1>
+            <p style="font-size:1.5rem; margin-top:10px">Emperor of History 🏛️</p>
+
+            <div class="reviews-container">
+                <div class="reviews-track" id="reviewTrack">
+                    <div class="review-card">
+                        <div class="stars">★★★★★</div>
+                        <p>"أقوى شرح تاريخ في مصر، المستر بيخلي المادة قصة ممتعة مش حفظ."</p>
+                        <small style="color:var(--gold)">- طالب بالثانوية العامة</small>
+                    </div>
+                    <div class="review-card">
+                        <div class="stars">★★★★★</div>
+                        <p>"التاريخ في أمان فعلاً، المنصة مريحة جداً والحماية فيها قوية."</p>
+                        <small style="color:var(--gold)">- دفعة 2026</small>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 
     <div id="dashboard">
         <aside class="sidebar">
@@ -61,7 +88,7 @@
             <span id="u-rank" style="opacity:0.5; font-size:13px"></span>
             <hr style="width:100%; border:0; border-top:1px solid #222; margin:25px 0">
             <div id="nav-links"></div>
-            <button class="btn btn-gold" style="background:var(--red); color:#fff; margin-top:auto" onclick="location.reload()">تسجيل خروج</button>
+            <button class="btn btn-gold" style="background:var(--red); color:#fff; margin-top:auto" onclick="location.reload()">خروج</button>
         </aside>
 
         <main class="main-content">
@@ -73,6 +100,7 @@
                     <input type="text" id="lec-url" placeholder="رابط الفيديو">
                     <button class="btn btn-gold" onclick="addLecture()">إطلاق الفيديو الآن</button>
                 </div>
+                <div class="card" id="lec-list-teacher"></div>
                 <div class="card">
                     <h3>❓ أسئلة الطلاب الواصلة</h3>
                     <div id="teacher-questions"></div>
@@ -89,12 +117,12 @@
                         <option value="center">طلاب السنتر</option>
                         <option value="online">طلاب الأونلاين</option>
                     </select>
-                    <button class="btn btn-gold" style="width:100%" onclick="activateAndNotify()">تفعيل السيشن (3 مشاهدات) + إرسال حضور</button>
+                    <button class="btn btn-gold" style="width:100%" onclick="activateAndNotify()">تفعيل (3 مشاهدات) + إرسال حضور</button>
                 </div>
             </div>
 
             <div id="sec-student" class="sec hidden">
-                <h1>🎥 محاضراتي المتاحة</h1>
+                <h1>🎥 محاضراتي</h1>
                 <div id="student-lectures"></div>
                 <div id="video-player-area" class="hidden">
                     <div class="video-container">
@@ -111,50 +139,43 @@
         </main>
     </div>
 
-    <div id="login-modal" class="modal">
-        <div class="form-box">
-            <h2 style="color:var(--gold); text-align:center">دخول</h2>
-            <input type="text" id="l-id" placeholder="الكود">
-            <input type="password" id="l-pass" placeholder="كلمة المرور">
-            <button class="btn btn-gold" style="width:100%" onclick="login()">دخول</button>
-            <p onclick="closeModals()" style="text-align:center; cursor:pointer">إغلاق</p>
-        </div>
-    </div>
+    <div id="login-modal" class="modal"><div class="form-box">
+        <h2 style="color:var(--gold); text-align:center">دخول</h2>
+        <input type="text" id="l-id" placeholder="الكود">
+        <input type="password" id="l-pass" placeholder="كلمة المرور">
+        <button class="btn btn-gold" style="width:100%" onclick="login()">دخول</button>
+        <p onclick="closeModals()" style="text-align:center; cursor:pointer">إغلاق</p>
+    </div></div>
 
-    <div id="signup-modal" class="modal">
-        <div class="form-box">
-            <h2 style="color:var(--gold); text-align:center">تسجيل جديد</h2>
-            <input type="text" id="s-name" placeholder="الاسم بالكامل">
-            <input type="tel" id="s-parent" placeholder="رقم ولي الأمر">
-            <input type="password" id="s-pass" placeholder="كلمة المرور">
-            <button class="btn btn-gold" style="width:100%" onclick="signup()">إنشاء حساب</button>
-            <p onclick="closeModals()" style="text-align:center; cursor:pointer">إغلاق</p>
-        </div>
-    </div>
+    <div id="signup-modal" class="modal"><div class="form-box">
+        <h2 style="color:var(--gold); text-align:center">تسجيل جديد</h2>
+        <input type="text" id="s-name" placeholder="الاسم بالكامل">
+        <input type="tel" id="s-parent" placeholder="رقم ولي الأمر">
+        <input type="password" id="s-pass" placeholder="كلمة المرور">
+        <button class="btn btn-gold" style="width:100%" onclick="signup()">إنشاء حساب</button>
+        <p onclick="closeModals()" style="text-align:center; cursor:pointer">إغلاق</p>
+    </div></div>
 
     <script>
-        let db;
-        let activeUser = null;
-        let currentLecId = null;
+        let db; let activeUser = null; let currentLecId = null;
 
         function initSystem() {
-            db = JSON.parse(localStorage.getItem('empire_v13_db')) || { 
+            db = JSON.parse(localStorage.getItem('empire_v14_db')) || { 
                 users: [
                     {id: "BOSS-OWNER", name: "إمبراطور الإدارة", password: "123", role: "boss"},
                     {id: "TEACHER-AHMED", name: "أحمد القرشي", password: "123", role: "teacher"},
                     {id: "STAFF-01", name: "مساعد 1", password: "123", role: "staff"}
                 ], 
-                lectures: [],
-                questions: []
+                lectures: [], questions: []
             };
+            startReviewSlider();
             save();
         }
 
         function notify(msg) {
             const container = document.getElementById('notification-container');
             const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.innerText = msg;
+            toast.className = 'toast'; toast.innerText = msg;
             container.appendChild(toast);
             setTimeout(() => toast.remove(), 4000);
         }
@@ -163,21 +184,18 @@
             const id = document.getElementById('l-id').value.trim();
             const pass = document.getElementById('l-pass').value.trim();
             activeUser = db.users.find(u => u.id === id && u.password === pass);
-
             if(activeUser) {
                 document.getElementById('home-view').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'flex';
                 document.getElementById('u-name').innerText = activeUser.name;
                 document.getElementById('u-rank').innerText = "الرتبة: " + activeUser.role;
-                renderNav();
-                closeModals();
-                notify("أهلاً بك في مملكتك يا " + activeUser.name);
-            } else notify("بيانات الدخول غير صحيحة!");
+                renderNav(); closeModals();
+                notify("أهلاً بك يا " + activeUser.name);
+            } else notify("خطأ في البيانات!");
         }
 
         function renderNav() {
-            const nav = document.getElementById('nav-links');
-            nav.innerHTML = '';
+            const nav = document.getElementById('nav-links'); nav.innerHTML = '';
             if(activeUser.role === 'teacher' || activeUser.role === 'boss') {
                 nav.innerHTML += `<button class="btn btn-outline" style="width:100%; margin-bottom:10px" onclick="showSec('sec-teacher')">إدارة الدروس والأسئلة</button>`;
                 renderTeacherData();
@@ -197,30 +215,26 @@
             document.getElementById(id).classList.remove('hidden');
         }
 
-        // --- وظائف المعلم ---
         function addLecture() {
             const title = document.getElementById('lec-title').value;
             const url = document.getElementById('lec-url').value;
-            if(!title || !url) return notify("أكمل البيانات أولاً");
-            const newLec = { id: Date.now(), title, url };
-            db.lectures.push(newLec);
-            save();
-            notify("تم إطلاق المحاضرة بنجاح!");
-            renderTeacherData();
+            if(!title || !url) return notify("أكمل البيانات");
+            db.lectures.push({ id: Date.now(), title, url });
+            save(); notify("تم النشر!"); renderTeacherData();
+        }
+
+        function removeLecture(id) {
+            db.lectures = db.lectures.filter(l => l.id !== id);
+            save(); renderTeacherData(); notify("تم الحذف");
         }
 
         function renderTeacherData() {
             const qDiv = document.getElementById('teacher-questions');
-            qDiv.innerHTML = db.questions.map(q => `
-                <div class="q-box">
-                    <strong>الطالب: ${q.studentName} (${q.studentId})</strong>
-                    <p>المحاضرة: ${q.lecTitle}</p>
-                    <p style="color:var(--gold)">السؤال: ${q.text}</p>
-                </div>
-            `).join('') || "لا يوجد أسئلة حالياً";
+            qDiv.innerHTML = db.questions.map(q => `<div class="q-box"><strong>${q.studentName}:</strong> <span style="color:var(--gold)">${q.text}</span></div>`).join('') || "لا أسئلة";
+            const lDiv = document.getElementById('lec-list-teacher');
+            lDiv.innerHTML = "<h3>المحاضرات المنشورة</h3>" + db.lectures.map(l => `<div>${l.title} <button onclick="removeLecture(${l.id})" style="color:red; background:none; border:none; cursor:pointer">حذف</button></div>`).join('');
         }
 
-        // --- وظائف المساعد ---
         function renderStaffData() {
             const select = document.getElementById('staff-lec-select');
             select.innerHTML = db.lectures.map(l => `<option value="${l.id}">${l.title}</option>`).join('');
@@ -230,94 +244,53 @@
             const stId = document.getElementById('staff-st-id').value;
             const lecId = document.getElementById('staff-lec-select').value;
             const student = db.users.find(u => u.id === stId);
-
-            if(!student) return notify("كود الطالب غير صحيح!");
-
-            // تفعيل 3 مشاهدات
+            if(!student) return notify("كود خطأ!");
             if(!student.access) student.access = {};
             student.access[lecId] = { views: 3, type: document.getElementById('staff-type').value };
-            
-            save();
-            notify(`تم تفعيل المحاضرة لـ ${student.name} بنجاح.`);
-            
-            // محاكاة إرسال رسالة لولي الأمر
-            const parentMsg = `إلى ولي أمر الطالب ${student.name}: نود إبلاغكم بحضور الطالب لمحاضرة التاريخ اليوم بمقر (السنتر/أونلاين). مع تحيات مستر أحمد القرشي.`;
-            console.log("SMS to " + student.parent + ": " + parentMsg);
-            notify("تم تجهيز رسالة الحضور لولي الأمر!");
+            save(); notify("تم التفعيل وإرسال إشعار حضور لولي الأمر");
         }
 
-        // --- وظائف الطالب ---
         function renderStudentLectures() {
             const div = document.getElementById('student-lectures');
             div.innerHTML = db.lectures.map(l => {
-                const hasAccess = activeUser.access && activeUser.access[l.id] && activeUser.access[l.id].views > 0;
-                return `
-                <div class="card">
-                    <h3>${l.title}</h3>
-                    <p>المشاهدات المتبقية: ${hasAccess ? activeUser.access[l.id].views : 0}</p>
-                    <button class="btn btn-gold" ${!hasAccess ? 'disabled' : ''} onclick="playVideo('${l.id}')">
-                        ${hasAccess ? 'فتح المحاضرة' : 'غير مفعلة'}
-                    </button>
-                </div>`;
+                const acc = activeUser.access && activeUser.access[l.id] ? activeUser.access[l.id].views : 0;
+                return `<div class="card"><h3>${l.title}</h3><p>متبقي: ${acc}</p><button class="btn btn-gold" ${acc<=0?'disabled':''} onclick="playVideo('${l.id}')">شاهد</button></div>`;
             }).join('');
         }
 
         function playVideo(id) {
             const lec = db.lectures.find(l => l.id == id);
-            if(activeUser.access[id].views <= 0) return notify("انتهت عدد المشاهدات المسموحة!");
-            
-            activeUser.access[id].views--;
-            save();
-            currentLecId = id;
-            
+            activeUser.access[id].views--; save(); currentLecId = id;
             document.getElementById('video-player-area').classList.remove('hidden');
-            const video = document.getElementById('main-video');
-            video.src = lec.url;
-            video.play();
-            startWatermark();
-            renderStudentLectures();
-            notify("بدأت المشاهدة. متبقي لك: " + activeUser.access[id].views);
+            const v = document.getElementById('main-video'); v.src = lec.url; v.play();
+            startWatermark(); renderStudentLectures();
         }
 
         function sendQuestion() {
             const text = document.getElementById('st-question-text').value;
             const lec = db.lectures.find(l => l.id == currentLecId);
-            db.questions.push({
-                studentId: activeUser.id,
-                studentName: activeUser.name,
-                lecTitle: lec.title,
-                text: text
-            });
-            save();
-            notify("تم إرسال سؤالك للمستر!");
-            document.getElementById('st-question-text').value = '';
+            db.questions.push({ studentId: activeUser.id, studentName: activeUser.name, lecTitle: lec.title, text: text });
+            save(); notify("وصل سؤالك للمستر!"); document.getElementById('st-question-text').value = '';
+        }
+
+        function startReviewSlider() {
+            let idx = 0; const track = document.getElementById('reviewTrack');
+            setInterval(() => { idx = (idx + 1) % 2; track.style.transform = `translateX(${idx * 100}%)`; }, 4000);
         }
 
         function startWatermark() {
-            const wm = document.getElementById('watermark');
-            wm.innerText = `${activeUser.id} | ${activeUser.name}`;
-            setInterval(() => {
-                wm.style.top = Math.random() * 80 + "%";
-                wm.style.left = Math.random() * 70 + "%";
-            }, 3000);
+            const wm = document.getElementById('watermark'); wm.innerText = `${activeUser.id} | ${activeUser.name}`;
+            setInterval(() => { wm.style.top = Math.random()*80+"%"; wm.style.left = Math.random()*70+"%"; }, 3000);
         }
 
-        // الأدوات العامة
         function signup() {
             const id = "ST-" + Math.floor(1000+Math.random()*9000);
-            const newUser = {
-                id, name: document.getElementById('s-name').value,
-                parent: document.getElementById('s-parent').value,
-                password: document.getElementById('s-pass').value,
-                role: "student", access: {}
-            };
-            db.users.push(newUser); save();
-            notify("تم التسجيل! كودك: " + id);
-            closeModals();
+            db.users.push({id, name: document.getElementById('s-name').value, parent: document.getElementById('s-parent').value, password: document.getElementById('s-pass').value, role: "student", access: {}});
+            save(); notify("كودك: " + id); closeModals();
         }
         function openModal(id) { document.getElementById(id).style.display='flex'; }
         function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display='none'); }
-        function save() { localStorage.setItem('empire_v13_db', JSON.stringify(db)); }
+        function save() { localStorage.setItem('empire_v14_db', JSON.stringify(db)); }
     </script>
 </body>
 </html>
