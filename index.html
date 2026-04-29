@@ -218,7 +218,21 @@
             const pass = document.getElementById('s-pass').value;
             if(!isStrongPass(pass)) return notify("⚠️ كلمة المرور ضعيفة! راجع الشروط.");
             const name = document.getElementById('s-name').value;
+            <div id="signup-modal" class="modal"><div class="form-box">
+    <h2 style="color:var(--gold); text-align:center">تسجيل إمبراطوري جديد</h2>
+    <input type="text" id="s-name" placeholder="الاسم الرباعي">
+    <select id="s-stage"><option value="1">أولى ثانوي</option><option value="2">ثانية ثانوي</option><option value="3">ثالثة ثانوي</option></select>
+    
+    <input type="tel" id="s-phone" placeholder="رقم موبايل الطالب">
+    <input type="tel" id="s-parent" placeholder="رقم موبايل ولي الأمر">
+    
+    <input type="password" id="s-pass" placeholder="كلمة المرور">
+    <div class="pass-hint">يجب أن تكون 8 رموز وتتضمن رقماً ورمزاً خاصاً مثل (@#$).</div>
+    <button class="btn btn-gold" style="width:100%; margin-top:10px" onclick="signup()">إنشاء حسابي</button>
+    <p onclick="closeModals()" style="text-align:center; cursor:pointer; color:#888; margin-top:15px">إلغاء</p>
+</div></div>
             if(!name) return notify("⚠️ اكتب اسمك!");
+            
             
             const id = "ST-" + Math.floor(1000 + Math.random() * 9000);
             db.users.push({id, name, stage: document.getElementById('s-stage').value, password: pass, role: "student", access: {}});
