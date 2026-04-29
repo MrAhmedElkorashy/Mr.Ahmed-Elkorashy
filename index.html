@@ -3,252 +3,321 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة الإمبراطور | أحمد القرشي</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <title>إمبراطورية التاريخ | النظام الإداري المتكامل</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --accent: #D4AF37; 
-            --bg: #0a0a0a; 
-            --card: rgba(20, 20, 20, 0.95); 
-            --text: #ffffff; 
-            --danger: #e74c3c; 
-            --success: #2ecc71;
-        }
-
+        :root { --gold: #D4AF37; --bg: #050505; --card: #111; --text: #fff; --red: #ff4d4d; --green: #2ecc71; }
         body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Cairo', sans-serif; overflow-x: hidden; }
 
-        /* --- Landing Page & Pyramids BG --- */
-        .hero { 
-            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; 
-            background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), 
-                        url('https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&w=1350&q=80');
-            background-size: cover; background-position: center; background-attachment: fixed; padding: 20px;
-        }
+        /* --- Custom Notifications (Toasts) --- */
+        #notification-container { position: fixed; top: 20px; left: 20px; z-index: 10000; }
+        .toast { background: var(--card); border-right: 5px solid var(--gold); color: white; padding: 15px 25px; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); animation: slideIn 0.5s ease; min-width: 250px; }
+        @keyframes slideIn { from { transform: translateX(-100%); } to { transform: translateX(0); } }
 
-        .navbar { 
-            position: fixed; top: 0; left: 0; right: 0; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; 
-            z-index: 1000; background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-        }
-
-        .slogan {
-            font-size: 1.3rem; color: #fff; margin-bottom: 20px; background: rgba(212, 175, 55, 0.15);
-            padding: 10px 25px; border-radius: 50px; border: 1px solid var(--accent); animation: glow 2s infinite alternate;
-        }
-
-        @keyframes glow { from { box-shadow: 0 0 5px var(--accent); } to { box-shadow: 0 0 20px var(--accent); } }
-
-        /* --- Buttons --- */
-        .btn-gold { background: var(--accent); color: #000; border: none; padding: 12px 25px; border-radius: 12px; font-weight: 900; cursor: pointer; transition: 0.3s; font-size: 16px; }
-        .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(212, 175, 55, 0.4); }
-        .btn-outline { background: transparent; color: var(--accent); border: 2px solid var(--accent); }
-
-        /* --- Reviews Slider --- */
-        .reviews-container { width: 100%; max-width: 600px; margin-top: 30px; overflow: hidden; background: rgba(0,0,0,0.6); border-radius: 20px; border: 1px solid rgba(212, 175, 55, 0.2); }
-        .reviews-track { display: flex; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
-        .review-card { min-width: 100%; padding: 25px; box-sizing: border-box; }
-
-        /* --- Protection & Watermark --- */
-        .video-container { position: relative; width: 100%; border-radius: 15px; overflow: hidden; border: 1px solid var(--accent); background: #000; }
-        #watermark { 
-            position: absolute; color: rgba(255, 255, 255, 0.25); font-size: 16px; font-weight: bold;
-            pointer-events: none; z-index: 999; white-space: nowrap; transition: all 2s linear; text-shadow: 1px 1px 2px #000;
-        }
-
-        /* --- Modals & Forms --- */
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; justify-content: center; align-items: center; z-index: 9999; padding: 20px; }
-        .form-box { background: #111; padding: 35px; border-radius: 25px; width: 100%; max-width: 400px; border: 2px solid var(--accent); position: relative; }
-        .glass-input { width: 100%; background: #1a1a1a; border: 1px solid #333; padding: 12px; border-radius: 10px; color: #fff; margin-bottom: 15px; font-family: 'Cairo'; box-sizing: border-box; }
-        .glass-input:focus { border-color: var(--accent); outline: none; }
+        /* --- UI Elements --- */
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-attachment: fixed; }
+        .navbar { position: fixed; top:0; width:100%; padding:15px; display:flex; justify-content:space-around; background:rgba(0,0,0,0.8); backdrop-filter:blur(15px); z-index:1000; border-bottom:1px solid var(--gold); }
+        .btn { padding:10px 25px; border-radius:12px; cursor:pointer; font-weight:bold; border:none; transition:0.3s; font-family: 'Cairo'; }
+        .btn-gold { background: var(--gold); color:#000; }
+        .btn-outline { background:transparent; border:1px solid var(--gold); color:var(--gold); }
 
         /* --- Dashboard --- */
-        #main-app { display: none; min-height: 100vh; background: #080808; }
-        .sidebar { width: 280px; background: #000; border-left: 1px solid #222; padding: 30px; display: flex; flex-direction: column; }
-        .content { flex: 1; padding: 40px; overflow-y: auto; }
+        #dashboard { display:none; min-height:100vh; flex-direction:row; }
+        .sidebar { width:280px; background:#000; border-left:1px solid #222; padding:25px; display:flex; flex-direction:column; }
+        .main-content { flex:1; padding:40px; background:#080808; overflow-y: auto; height: 100vh; }
+        .card { background:var(--card); padding:25px; border-radius:18px; border:1px solid #222; margin-bottom:25px; }
 
-        .hidden { display: none !important; }
+        /* --- Video & Questions --- */
+        .video-container { position:relative; width:100%; border-radius:15px; overflow:hidden; border:2px solid var(--gold); }
+        #watermark { position:absolute; color:rgba(255,255,255,0.2); font-weight:bold; pointer-events:none; z-index:99; transition:3s linear; }
+        .q-box { margin-top:20px; background:#1a1a1a; padding:15px; border-radius:10px; }
+
+        input, select, textarea { width:100%; padding:12px; margin:10px 0; background:#1a1a1a; border:1px solid #333; color:#fff; border-radius:8px; font-family: 'Cairo'; box-sizing: border-box; }
+        .hidden { display:none !important; }
+        .modal { position:fixed; inset:0; background:rgba(0,0,0,0.95); display:none; justify-content:center; align-items:center; z-index:9999; }
     </style>
 </head>
 <body onload="initSystem()">
 
-    <section id="home-view">
+    <div id="notification-container"></div>
+
+    <div id="home-view">
         <nav class="navbar">
-            <div style="display:flex; gap:10px">
-                <button class="btn-gold" onclick="openModal('login-modal')">طلاب الإمبراطورية</button>
-                <button class="btn-gold btn-outline" onclick="openModal('signup-modal')">طلاب جدد</button>
+            <div style="display:flex; gap:15px">
+                <button class="btn btn-gold" onclick="openModal('login-modal')">دخول</button>
+                <button class="btn btn-outline" onclick="openModal('signup-modal')">حساب جديد</button>
             </div>
-            <div style="font-weight: 900; color: var(--accent); font-size: 24px;">أحمد القرشي</div>
+            <div style="color:var(--gold); font-weight:900; font-size:24px">إمبراطورية التاريخ</div>
         </nav>
-
         <div class="hero">
-            <div class="slogan">التاريخ في أمان مع أحمد القرشي أنت كسبان</div>
-            <p style="font-size: 1.3rem; color: #ddd; margin: 0;">مرحباً بكم في منصة</p>
-            <h1 style="font-size: 4rem; color: var(--accent); margin: 10px 0; text-shadow: 0 0 20px #000;">إمبراطور التاريخ</h1>
-            
-            <div class="reviews-container">
-                <div class="reviews-track" id="reviewTrack">
-                    <div class="review-card">
-                        <div style="color:var(--accent); margin-bottom:10px">★★★★★</div>
-                        <p>"أقوى شرح تاريخ في مصر، المستر بيخلي المادة قصة ممتعة مش حفظ."</p>
-                        <small>- طالب بالثانوية العامة</small>
-                    </div>
-                    <div class="review-card">
-                        <div style="color:var(--accent); margin-bottom:10px">★★★★★</div>
-                        <p>"المنصة سهلة جداً والحماية فيها قوية وبنطمن على محاضراتنا."</p>
-                        <small>- دفعة 2026</small>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div id="signup-modal" class="modal">
-        <div class="form-box">
-            <h2 style="text-align:center; color:var(--accent)">انضم لجيش الإمبراطور</h2>
-            <input type="text" id="reg-name" class="glass-input" placeholder="الاسم بالكامل">
-            <input type="tel" id="reg-phone" class="glass-input" placeholder="رقم موبايلك">
-            <input type="tel" id="reg-parent" class="glass-input" placeholder="رقم موبايل ولي الأمر">
-            <select id="reg-grade" class="glass-input">
-                <option value="3">الصف الثالث الثانوي</option>
-                <option value="2">الصف الثاني الثانوي</option>
-                <option value="1">الصف الأول الثانوي</option>
-            </select>
-            <input type="password" id="reg-pass" class="glass-input" placeholder="اختر كلمة مرور">
-            <button class="btn-gold" style="width:100%" onclick="handleSignup()">تأكيد التسجيل</button>
-            <p onclick="closeModals()" style="text-align:center; margin-top:15px; cursor:pointer; color:#666">رجوع</p>
+            <h1 style="font-size:3.5rem; color:var(--gold); margin-bottom:10px">الأستاذ أحمد القرشي</h1>
+            <div style="border:1px solid var(--gold); padding:8px 30px; border-radius:50px">التاريخ في أمان مع أحمد القرشي أنت كسبان</div>
         </div>
     </div>
 
-    <div id="login-modal" class="modal">
-        <div class="form-box">
-            <h2 style="text-align:center; color:var(--accent)">تسجيل الدخول</h2>
-            <input type="text" id="login-id" class="glass-input" placeholder="كود الطالب (ST-XXXX)">
-            <input type="password" id="login-pass" class="glass-input" placeholder="كلمة المرور">
-            <button class="btn-gold" style="width:100%" onclick="handleLogin()">دخول</button>
-            <p onclick="closeModals()" style="text-align:center; margin-top:15px; cursor:pointer; color:#666">رجوع</p>
-        </div>
-    </div>
-
-    <div id="main-app">
+    <div id="dashboard">
         <aside class="sidebar">
-            <h3 id="display-name" style="color:var(--accent); margin-bottom:5px"></h3>
-            <span id="display-id" style="font-size:12px; color:#666"></span>
-            
-            <nav style="margin-top:40px">
-                <div class="btn-gold" style="margin-bottom:10px; text-align:center" onclick="showTab('tab-lectures')">🏛️ محاضراتي</div>
-                <div class="btn-gold btn-outline" style="margin-bottom:10px; text-align:center" onclick="showTab('tab-pay')">💳 اشتراكاتي</div>
-            </nav>
-
-            <button class="btn-gold" style="background:var(--danger); color:white; margin-top:auto" onclick="location.reload()">تسجيل خروج</button>
+            <h2 id="u-name" style="color:var(--gold); margin-bottom:0"></h2>
+            <span id="u-rank" style="opacity:0.5; font-size:13px"></span>
+            <hr style="width:100%; border:0; border-top:1px solid #222; margin:25px 0">
+            <div id="nav-links"></div>
+            <button class="btn btn-gold" style="background:var(--red); color:#fff; margin-top:auto" onclick="location.reload()">تسجيل خروج</button>
         </aside>
 
-        <main class="content">
-            <div id="tab-lectures" class="tab-view">
-                <h1 style="color:var(--accent)">🏛️ مكتبة المحاضرات</h1>
-                <div class="video-container" id="videoBox">
-                    <div id="watermark"></div>
-                    <video id="player" width="100%" controls controlsList="nodownload" oncontextmenu="return false;">
-                        <source src="" type="video/mp4">
-                    </video>
+        <main class="main-content">
+            <div id="sec-teacher" class="sec hidden">
+                <h1>🏛️ لوحة تحكم المعلم</h1>
+                <div class="card">
+                    <h3>نشر محاضرة جديدة</h3>
+                    <input type="text" id="lec-title" placeholder="عنوان المحاضرة">
+                    <input type="text" id="lec-url" placeholder="رابط الفيديو">
+                    <button class="btn btn-gold" onclick="addLecture()">إطلاق الفيديو الآن</button>
                 </div>
-                <p style="margin-top:10px; color:#888">ملاحظة: كود الطالب يظهر فوق الفيديو لمنع التصوير والسرقة.</p>
+                <div class="card">
+                    <h3>❓ أسئلة الطلاب الواصلة</h3>
+                    <div id="teacher-questions"></div>
+                </div>
             </div>
 
-            <div id="tab-pay" class="tab-view hidden">
-                <h1 style="color:var(--accent)">💳 شحن الحساب</h1>
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-top:30px">
-                    <div class="form-box" style="max-width:none; text-align:center" onclick="processPayment('Fawry')">
-                        <img src="https://fawry.com/wp-content/uploads/2021/04/Fawry-Logo-1.png" height="40">
-                        <h3>دفع فوري</h3>
+            <div id="sec-staff" class="sec hidden">
+                <h1>📋 تفعيل الطلاب والحضور</h1>
+                <div class="card">
+                    <h3>تفعيل سيشن لطالب</h3>
+                    <input type="text" id="staff-st-id" placeholder="كود الطالب (ST-XXXX)">
+                    <select id="staff-lec-select"></select>
+                    <select id="staff-type">
+                        <option value="center">طلاب السنتر</option>
+                        <option value="online">طلاب الأونلاين</option>
+                    </select>
+                    <button class="btn btn-gold" style="width:100%" onclick="activateAndNotify()">تفعيل السيشن (3 مشاهدات) + إرسال حضور</button>
+                </div>
+            </div>
+
+            <div id="sec-student" class="sec hidden">
+                <h1>🎥 محاضراتي المتاحة</h1>
+                <div id="student-lectures"></div>
+                <div id="video-player-area" class="hidden">
+                    <div class="video-container">
+                        <div id="watermark"></div>
+                        <video id="main-video" width="100%" controls controlsList="nodownload"></video>
                     </div>
-                    <div class="form-box" style="max-width:none; text-align:center" onclick="processPayment('Paymob')">
-                        <img src="https://paymob.com/assets/images/paymob-logo.png" height="40">
-                        <h3>كارت بنكي / محفظة</h3>
+                    <div class="card" style="margin-top:20px">
+                        <h3>اسأل المستر عن هذه المحاضرة</h3>
+                        <textarea id="st-question-text" placeholder="اكتب سؤالك هنا..."></textarea>
+                        <button class="btn btn-gold" onclick="sendQuestion()">إرسال السؤال</button>
                     </div>
                 </div>
             </div>
         </main>
     </div>
 
+    <div id="login-modal" class="modal">
+        <div class="form-box">
+            <h2 style="color:var(--gold); text-align:center">دخول</h2>
+            <input type="text" id="l-id" placeholder="الكود">
+            <input type="password" id="l-pass" placeholder="كلمة المرور">
+            <button class="btn btn-gold" style="width:100%" onclick="login()">دخول</button>
+            <p onclick="closeModals()" style="text-align:center; cursor:pointer">إغلاق</p>
+        </div>
+    </div>
+
+    <div id="signup-modal" class="modal">
+        <div class="form-box">
+            <h2 style="color:var(--gold); text-align:center">تسجيل جديد</h2>
+            <input type="text" id="s-name" placeholder="الاسم بالكامل">
+            <input type="tel" id="s-parent" placeholder="رقم ولي الأمر">
+            <input type="password" id="s-pass" placeholder="كلمة المرور">
+            <button class="btn btn-gold" style="width:100%" onclick="signup()">إنشاء حساب</button>
+            <p onclick="closeModals()" style="text-align:center; cursor:pointer">إغلاق</p>
+        </div>
+    </div>
+
     <script>
         let db;
         let activeUser = null;
+        let currentLecId = null;
 
         function initSystem() {
-            db = JSON.parse(localStorage.getItem('empire_v11_db')) || { users: [], lectures: [] };
-            startReviewSlider();
-        }
-
-        // --- Auth Logic ---
-        function handleSignup() {
-            const name = document.getElementById('reg-name').value;
-            const pPhone = document.getElementById('reg-parent').value;
-            const phone = document.getElementById('reg-phone').value;
-            const pass = document.getElementById('reg-pass').value;
-
-            if(!name || !pPhone || !phone || !pass) return alert("جميع الخانات مطلوبة، خاصة رقم ولي الأمر!");
-
-            const id = "ST-" + Math.floor(1000 + Math.random() * 9000);
-            const newUser = { id, name, phone, parentPhone: pPhone, password: pass, grade: document.getElementById('reg-grade').value };
-            db.users.push(newUser);
+            db = JSON.parse(localStorage.getItem('empire_v13_db')) || { 
+                users: [
+                    {id: "BOSS-OWNER", name: "إمبراطور الإدارة", password: "123", role: "boss"},
+                    {id: "TEACHER-AHMED", name: "أحمد القرشي", password: "123", role: "teacher"},
+                    {id: "STAFF-01", name: "مساعد 1", password: "123", role: "staff"}
+                ], 
+                lectures: [],
+                questions: []
+            };
             save();
-            alert(`مبروك يا بطل! تم التسجيل.\nكود الدخول الخاص بك هو: ${id}`);
-            closeModals();
         }
 
-        function handleLogin() {
-            const id = document.getElementById('login-id').value.trim();
-            const pass = document.getElementById('login-pass').value.trim();
+        function notify(msg) {
+            const container = document.getElementById('notification-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerText = msg;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 4000);
+        }
 
+        function login() {
+            const id = document.getElementById('l-id').value.trim();
+            const pass = document.getElementById('l-pass').value.trim();
             activeUser = db.users.find(u => u.id === id && u.password === pass);
 
             if(activeUser) {
                 document.getElementById('home-view').style.display = 'none';
-                document.getElementById('main-app').style.display = 'flex';
-                document.getElementById('display-name').innerText = activeUser.name;
-                document.getElementById('display-id').innerText = "كود: " + activeUser.id;
-                startWatermark();
+                document.getElementById('dashboard').style.display = 'flex';
+                document.getElementById('u-name').innerText = activeUser.name;
+                document.getElementById('u-rank').innerText = "الرتبة: " + activeUser.role;
+                renderNav();
                 closeModals();
-            } else {
-                alert("بيانات الدخول غير صحيحة");
+                notify("أهلاً بك في مملكتك يا " + activeUser.name);
+            } else notify("بيانات الدخول غير صحيحة!");
+        }
+
+        function renderNav() {
+            const nav = document.getElementById('nav-links');
+            nav.innerHTML = '';
+            if(activeUser.role === 'teacher' || activeUser.role === 'boss') {
+                nav.innerHTML += `<button class="btn btn-outline" style="width:100%; margin-bottom:10px" onclick="showSec('sec-teacher')">إدارة الدروس والأسئلة</button>`;
+                renderTeacherData();
+            }
+            if(activeUser.role === 'staff' || activeUser.role === 'boss') {
+                nav.innerHTML += `<button class="btn btn-outline" style="width:100%; margin-bottom:10px" onclick="showSec('sec-staff')">تفعيل وحضور</button>`;
+                renderStaffData();
+            }
+            if(activeUser.role === 'student') {
+                nav.innerHTML += `<button class="btn btn-outline" style="width:100%; margin-bottom:10px" onclick="showSec('sec-student')">محاضراتي</button>`;
+                renderStudentLectures();
             }
         }
 
-        // --- UI Logic ---
-        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
-        
-        function showTab(tabId) {
-            document.querySelectorAll('.tab-view').forEach(v => v.classList.add('hidden'));
-            document.getElementById(tabId).classList.remove('hidden');
+        function showSec(id) {
+            document.querySelectorAll('.sec').forEach(s => s.classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
         }
 
-        function startReviewSlider() {
-            let idx = 0;
-            const track = document.getElementById('reviewTrack');
-            setInterval(() => {
-                idx = (idx + 1) % 2;
-                track.style.transform = `translateX(${idx * 100}%)`;
-            }, 4000);
+        // --- وظائف المعلم ---
+        function addLecture() {
+            const title = document.getElementById('lec-title').value;
+            const url = document.getElementById('lec-url').value;
+            if(!title || !url) return notify("أكمل البيانات أولاً");
+            const newLec = { id: Date.now(), title, url };
+            db.lectures.push(newLec);
+            save();
+            notify("تم إطلاق المحاضرة بنجاح!");
+            renderTeacherData();
         }
 
-        // --- Security: Watermark ---
+        function renderTeacherData() {
+            const qDiv = document.getElementById('teacher-questions');
+            qDiv.innerHTML = db.questions.map(q => `
+                <div class="q-box">
+                    <strong>الطالب: ${q.studentName} (${q.studentId})</strong>
+                    <p>المحاضرة: ${q.lecTitle}</p>
+                    <p style="color:var(--gold)">السؤال: ${q.text}</p>
+                </div>
+            `).join('') || "لا يوجد أسئلة حالياً";
+        }
+
+        // --- وظائف المساعد ---
+        function renderStaffData() {
+            const select = document.getElementById('staff-lec-select');
+            select.innerHTML = db.lectures.map(l => `<option value="${l.id}">${l.title}</option>`).join('');
+        }
+
+        function activateAndNotify() {
+            const stId = document.getElementById('staff-st-id').value;
+            const lecId = document.getElementById('staff-lec-select').value;
+            const student = db.users.find(u => u.id === stId);
+
+            if(!student) return notify("كود الطالب غير صحيح!");
+
+            // تفعيل 3 مشاهدات
+            if(!student.access) student.access = {};
+            student.access[lecId] = { views: 3, type: document.getElementById('staff-type').value };
+            
+            save();
+            notify(`تم تفعيل المحاضرة لـ ${student.name} بنجاح.`);
+            
+            // محاكاة إرسال رسالة لولي الأمر
+            const parentMsg = `إلى ولي أمر الطالب ${student.name}: نود إبلاغكم بحضور الطالب لمحاضرة التاريخ اليوم بمقر (السنتر/أونلاين). مع تحيات مستر أحمد القرشي.`;
+            console.log("SMS to " + student.parent + ": " + parentMsg);
+            notify("تم تجهيز رسالة الحضور لولي الأمر!");
+        }
+
+        // --- وظائف الطالب ---
+        function renderStudentLectures() {
+            const div = document.getElementById('student-lectures');
+            div.innerHTML = db.lectures.map(l => {
+                const hasAccess = activeUser.access && activeUser.access[l.id] && activeUser.access[l.id].views > 0;
+                return `
+                <div class="card">
+                    <h3>${l.title}</h3>
+                    <p>المشاهدات المتبقية: ${hasAccess ? activeUser.access[l.id].views : 0}</p>
+                    <button class="btn btn-gold" ${!hasAccess ? 'disabled' : ''} onclick="playVideo('${l.id}')">
+                        ${hasAccess ? 'فتح المحاضرة' : 'غير مفعلة'}
+                    </button>
+                </div>`;
+            }).join('');
+        }
+
+        function playVideo(id) {
+            const lec = db.lectures.find(l => l.id == id);
+            if(activeUser.access[id].views <= 0) return notify("انتهت عدد المشاهدات المسموحة!");
+            
+            activeUser.access[id].views--;
+            save();
+            currentLecId = id;
+            
+            document.getElementById('video-player-area').classList.remove('hidden');
+            const video = document.getElementById('main-video');
+            video.src = lec.url;
+            video.play();
+            startWatermark();
+            renderStudentLectures();
+            notify("بدأت المشاهدة. متبقي لك: " + activeUser.access[id].views);
+        }
+
+        function sendQuestion() {
+            const text = document.getElementById('st-question-text').value;
+            const lec = db.lectures.find(l => l.id == currentLecId);
+            db.questions.push({
+                studentId: activeUser.id,
+                studentName: activeUser.name,
+                lecTitle: lec.title,
+                text: text
+            });
+            save();
+            notify("تم إرسال سؤالك للمستر!");
+            document.getElementById('st-question-text').value = '';
+        }
+
         function startWatermark() {
             const wm = document.getElementById('watermark');
-            wm.innerText = `${activeUser.id} - ${activeUser.phone} - الإمبراطور`;
-            
+            wm.innerText = `${activeUser.id} | ${activeUser.name}`;
             setInterval(() => {
-                const x = Math.random() * 60; 
-                const y = Math.random() * 80;
-                wm.style.left = x + "%";
-                wm.style.top = y + "%";
+                wm.style.top = Math.random() * 80 + "%";
+                wm.style.left = Math.random() * 70 + "%";
             }, 3000);
         }
 
-        function processPayment(gateway) {
-            alert(`سيتم فتح بوابة ${gateway} الآن لإتمام الاشتراك..`);
+        // الأدوات العامة
+        function signup() {
+            const id = "ST-" + Math.floor(1000+Math.random()*9000);
+            const newUser = {
+                id, name: document.getElementById('s-name').value,
+                parent: document.getElementById('s-parent').value,
+                password: document.getElementById('s-pass').value,
+                role: "student", access: {}
+            };
+            db.users.push(newUser); save();
+            notify("تم التسجيل! كودك: " + id);
+            closeModals();
         }
-
-        function save() { localStorage.setItem('empire_v11_db', JSON.stringify(db)); }
+        function openModal(id) { document.getElementById(id).style.display='flex'; }
+        function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display='none'); }
+        function save() { localStorage.setItem('empire_v13_db', JSON.stringify(db)); }
     </script>
 </body>
 </html>
